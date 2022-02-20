@@ -28,7 +28,7 @@ enum TokenType {
     Type_Symbol,
     Type_Operator,
     Type_Identifier,
-    Type_Comment
+    Type_String
 }
 %%
 
@@ -36,7 +36,7 @@ enum TokenType {
 
 %{
 
-StringBuffer buffer = new StringBuffer();
+StringBuffer string = new StringBuffer();
 
 public static void main(String[] args) throws FileNotFoundException, IOException {
     FileReader yyinput = new FileReader(args[0]);
@@ -54,14 +54,13 @@ Letter = [A - Z, a - z]
 Other = [0 - 9 & .]
 Keyword = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct" | "if" | "then" | "else" | "for" | "return")
 ReservedFunction = ("printf")
-Comment = ("//")
 Input = [^\r\n]
 Terminator = \r|\n|\r\n
 WhiteSpace = {Terminator} | [ \t\f] | [\040\ n]
-Bracket = [{}()]*
-Symbol = (";")*
-Operator = ( "++" | "--" | "**" | "<=" | ">=" | "!=" | "%" | "=" | "<" | ">" | "!" | "." | "+" | "-" | "/" | "*")*
-Identifier = [:jletter:] [:jletterdigit:]*
+Bracket = [{}()]
+Symbol = (";")
+Operator = ("++" | "--" | "**" | "<=" | ">=" | "!=" | "%" | "=" | "<" | ">" | "!" | "." | "+" | "-" | "/" | "*")
+Identifier = [[:jletter:]&&[:jletterdigit:]]
 
 %state STRING
 
@@ -70,54 +69,76 @@ Identifier = [:jletter:] [:jletterdigit:]*
 
 // Tell JLex to name the generated class `Lexer`
 %class Lexer
+%char
+%line
+%column
 
 %eofval{ 
     return new Token(null, TokenType.Type_Null); 
 %eofval}
 
 %%
+<YYINITIAL> {
+{ReservedFunction}+ {
+    return new Token(yytext(), TokenType.Type_Reserved_Function);
+}
+{Keyword}+ {
+    return new Token(yytext(), TokenType.Type_Keyword);
+}
+{Bracket}+ {
+    return new Token(yytext(), TokenType.Type_Bracket);
+}
+{Operator}+ {
+    return new Token(yytext(), TokenType.Type_Operator);
+}
+{Identifier}+ {
+    return new Token(yytext(), TokenType.Type_Identifier);
+}
 {Integer}+ {
     return new Token(yytext(), TokenType.Type_Integer);
 }
 {WhiteSpace}+ {
     return new Token(yytext(), TokenType.Type_White_Space);
 }
-{ReservedFunction}+ {
-    return new Token(yytext(), TokenType.Type_Reserved_Function);
-}
-{Null}+ {
-    return new Token(yytext(), TokenType.Type_Null)
+\" {
+    string.setLength(0);
+    yybegin(STRING);
 }
 {Letter}+ {
-    return new Token(yytext(), TokenType.Type_Letter)
+    return new Token(yytext(), TokenType.Type_Letter);
 }
 {Other}+ {
-    return new Token(yytext(), TokenType.Type_Other)
-}
-{Keyword}+ {
-    return new Token(yytext(), TokenType.Type_Keyword)
-}
-{Comment}+ {
-    return new Token(yytext(), TokenType.Type_Comment)
+    return new Token(yytext(), TokenType.Type_Other);
 }
 {Input}+ {
-    return new Token(yytext(), TokenType.Type_Input)
+    return new Token(yytext(), TokenType.Type_Input);
 }
-{Terminator}+ {
-    return new Token(yytext(), TokenType.Type_Terminator)
 }
-{Bracket}+ {
-    return new Token(yytext(), TokenType.Type_Bracket)
+
+<STRING> {
+\" {
+    yybegin(YYINITIAL);
+    return new Token(string.toString(), TokenType.Type_String);
 }
-{Symbol}+ {
-    return new Token(yytext(), TokenType.Type_Symbol)
+[^\n\r\"\\]+ {
+    string.append(yytext());
 }
-{Operator}+ {
-    return new Token(yytext(), TokenType.Type_Operator)
+\\t {
+    string.append('\t');
 }
-{Identifier}+ {
-    return new Token(yytext(), TokenType.Type_Identifier)
+\\n {
+    string.append('\n');
 }
-. {
+\\r {
+    string.append('\r');
+}
+\\\" {
+    string.append('\"');
+}
+\\ {
+    string.append('\\');
+}
+}
+[^] {
     throw new Error("Illegal character <"+yytext()+">");
 }
