@@ -1,3 +1,4 @@
 /src/Scratch.java
 /src/Lexer.java
-/src/lexer.java~
+/src/Lexer.java~
+*.class

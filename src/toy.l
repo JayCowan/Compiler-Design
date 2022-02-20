@@ -1,3 +1,5 @@
+import java.io.*;
+
 class Token {
     String text;
     TokenType type;
@@ -13,6 +15,7 @@ class Token {
 }
 
 enum TokenType {
+    Type_Null,
     Type_Letter,
     Type_Integer,
     Type_Other,
@@ -31,11 +34,12 @@ enum TokenType {
 %unicode
 
 %{
+
 StringBuffer buffer = new StringBuffer();
 
 public static void main(String[] args) throws FileNotFoundException, IOException {
     FileReader yyinput = new FileReader(args[0]);
-    Yylex yylex = new Yylex(yyinput);
+    Lexer yylex = new Lexer(yyinput);
     Token token;
     while ((token = yylex.yylex()) != null) {
         System.out.println(token.text);
@@ -66,7 +70,7 @@ Identifier = [:jletter:] [:jletterdigit:]*
 %class Lexer
 
 %eofval{ 
-    return new Token(null); 
+    return new Token(null, TokenType.Type_Null); 
 %eofval}
 
 %%
