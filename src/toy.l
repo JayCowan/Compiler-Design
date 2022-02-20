@@ -15,16 +15,16 @@ class Token {
 enum TokenType {
     Type_Letter;
     Type_Integer;
-    Type_Others;
-    Type_Keywords;
-    Type_Reserved_Functions;
+    Type_Other;
+    Type_Keyword;
+    Type_Reserved_Function;
     Type_Input;
     Type_Terminator;
     Type_White_Space;
-    Type_Brackets;
-    Type_Symbols;
-    Type_Operators;
-    Type_Identifiers;
+    Type_Bracket;
+    Type_Symbol;
+    Type_Operator;
+    Type_Identifier;
 }
 %%
 
@@ -46,18 +46,18 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 
 %}
 
-Integers = [0 - 9]
+Integer = [0 - 9]
 Letter = [A - Z, a - z]
-Others = [0 - 9 & .]
-Keywords = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct" | "if" | "then" | "else" | "for" | "return")
-ReservedFunctions = ("printf")
+Other = [0 - 9 & .]
+Keyword = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct" | "if" | "then" | "else" | "for" | "return")
+ReservedFunction = ("printf")
 Input = [^\r\n]
 Terminator = \r|\n|\r\n
 WhiteSpace = {Terminator} | [ \t\f] | [\040\ n]
-Brackets = [{}()]*
-Symbols = (";")*
-Operators = ( "++" | "--" | "**" | "<=" | ">=" | "!=" | "%" | "=" | "<" | ">" | "!" | "." | "+" | "-" | "/" | "*")*
-Identifiers = [:jletter:] [:jletterdigit:]*
+Bracket = [{}()]*
+Symbol = (";")*
+Operator = ( "++" | "--" | "**" | "<=" | ">=" | "!=" | "%" | "=" | "<" | ">" | "!" | "." | "+" | "-" | "/" | "*")*
+Identifier = [:jletter:] [:jletterdigit:]*
 
 %state STRING
 
@@ -67,16 +67,16 @@ Identifiers = [:jletter:] [:jletterdigit:]*
 // Tell JLex to name the generated class `Lexer`
 %class Lexer
 
-%eofval {
-    return new Token(null); %
-eofval }
+%eofval{ 
+    return new Token(null); 
+%eofval}
 
 %%
-{Digit}+ {
-    return new Token(yytext());
+{Integer}+ {
+    return new Token(yytext(), TokenType.Type_Integer);
 }
 {WhiteSpace}+ {
-    // Handle WhiteSpace
+    return new Token(yytext(), TokenType.Type_White_Space);
 }
 . {
     throw new Error("Illegal character <"+yytext()+">");
