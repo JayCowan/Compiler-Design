@@ -13,8 +13,18 @@ class Token {
 }
 
 enum TokenType {
-    Type_String;
+    Type_Letter;
     Type_Integer;
+    Type_Others;
+    Type_Keywords;
+    Type_Reserved_Functions;
+    Type_Input;
+    Type_Terminator;
+    Type_White_Space;
+    Type_Brackets;
+    Type_Symbols;
+    Type_Operators;
+    Type_Identifiers;
 }
 %%
 
@@ -36,10 +46,20 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 
 %}
 
-Digit = [0 - 9]
-Letter = =[A - Z, a - z]
+Integers = [0 - 9]
+Letter = [A - Z, a - z]
 Others = [0 - 9 & .]
-WhiteSpace = [\040\ n]
+Keywords = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct" | "if" | "then" | "else" | "for" | "return")
+ReservedFunctions = ("printf")
+Input = [^\r\n]
+Terminator = \r|\n|\r\n
+WhiteSpace = {Terminator} | [ \t\f] | [\040\ n]
+Brackets = [{}()]*
+Symbols = (";")*
+Operators = ( "++" | "--" | "**" | "<=" | ">=" | "!=" | "%" | "=" | "<" | ">" | "!" | "." | "+" | "-" | "/" | "*")*
+Identifiers = [:jletter:] [:jletterdigit:]*
+
+%state STRING
 
 // Tell JLex to have yylex() return a Token
 %type Token
