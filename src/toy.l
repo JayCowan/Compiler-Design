@@ -1,14 +1,28 @@
 class Token {
     String text;
-    Token(String t){
-        text = t;
+    TokenType type;
+
+    Token(String text, TokenType type){
+        this.text = text;
+        this.type = type;
     }
+
+    public String toString() {
+        return String.format("%s %s", type, text);
+    }
+}
+
+enum TokenType {
+    Type_String;
+    Type_Integer;
 }
 %%
 
 %unicode
 
 %{
+import java.io.*
+
 StringBuffer buffer = new StringBuffer();
 
 public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -35,7 +49,7 @@ WhiteSpace = [\040\ n]
 
 %eofval {
     return new Token(null); %
-eofval}
+eofval }
 
 %%
 {Digit}+ {
