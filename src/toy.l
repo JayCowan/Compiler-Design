@@ -13,26 +13,24 @@ class Token {
 }
 
 enum TokenType {
-    Type_Letter;
-    Type_Integer;
-    Type_Other;
-    Type_Keyword;
-    Type_Reserved_Function;
-    Type_Input;
-    Type_Terminator;
-    Type_White_Space;
-    Type_Bracket;
-    Type_Symbol;
-    Type_Operator;
-    Type_Identifier;
+    Type_Letter,
+    Type_Integer,
+    Type_Other,
+    Type_Keyword,
+    Type_Reserved_Function,
+    Type_Input,
+    Type_Terminator,
+    Type_White_Space,
+    Type_Bracket,
+    Type_Symbol,
+    Type_Operator,
+    Type_Identifier
 }
 %%
 
 %unicode
 
 %{
-import java.io.*
-
 StringBuffer buffer = new StringBuffer();
 
 public static void main(String[] args) throws FileNotFoundException, IOException {
