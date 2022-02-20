@@ -27,7 +27,8 @@ enum TokenType {
     Type_Bracket,
     Type_Symbol,
     Type_Operator,
-    Type_Identifier
+    Type_Identifier,
+    Type_Comment
 }
 %%
 
@@ -53,6 +54,7 @@ Letter = [A - Z, a - z]
 Other = [0 - 9 & .]
 Keyword = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct" | "if" | "then" | "else" | "for" | "return")
 ReservedFunction = ("printf")
+Comment = ("//")
 Input = [^\r\n]
 Terminator = \r|\n|\r\n
 WhiteSpace = {Terminator} | [ \t\f] | [\040\ n]
@@ -79,6 +81,9 @@ Identifier = [:jletter:] [:jletterdigit:]*
 }
 {WhiteSpace}+ {
     return new Token(yytext(), TokenType.Type_White_Space);
+}
+{ReservedFunction}+ {
+    return new Token(yytext(), TokenType.Type_Reserved_Function);
 }
 . {
     throw new Error("Illegal character <"+yytext()+">");
