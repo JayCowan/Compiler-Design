@@ -85,6 +85,39 @@ Identifier = [:jletter:] [:jletterdigit:]*
 {ReservedFunction}+ {
     return new Token(yytext(), TokenType.Type_Reserved_Function);
 }
+{Null}+ {
+    return new Token(yytext(), TokenType.Type_Null)
+}
+{Letter}+ {
+    return new Token(yytext(), TokenType.Type_Letter)
+}
+{Other}+ {
+    return new Token(yytext(), TokenType.Type_Other)
+}
+{Keyword}+ {
+    return new Token(yytext(), TokenType.Type_Keyword)
+}
+{Comment}+ {
+    return new Token(yytext(), TokenType.Type_Comment)
+}
+{Input}+ {
+    return new Token(yytext(), TokenType.Type_Input)
+}
+{Terminator}+ {
+    return new Token(yytext(), TokenType.Type_Terminator)
+}
+{Bracket}+ {
+    return new Token(yytext(), TokenType.Type_Bracket)
+}
+{Symbol}+ {
+    return new Token(yytext(), TokenType.Type_Symbol)
+}
+{Operator}+ {
+    return new Token(yytext(), TokenType.Type_Operator)
+}
+{Identifier}+ {
+    return new Token(yytext(), TokenType.Type_Identifier)
+}
 . {
     throw new Error("Illegal character <"+yytext()+">");
 }
