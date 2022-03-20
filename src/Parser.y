@@ -1,6 +1,6 @@
 %language "Java"
 
-%define api.parser.class { ToYParser }
+%define api.parser.class { Parser }
 //%define api.value.type { Token }
 %define api.parser.public
 %define parse.error verbose
@@ -15,8 +15,8 @@
 
 %code {
     public static void main(String[] args) throws IOException {
-        ToYLexer l = new ToYLexer(System.in);
-        ToYParser p = new ToYParser(l);
+        Lexer l = new Lexer(System.in);
+        Parser p = new Parser(l);
         if (!p.parse()) System.out.println("INVALID");
     }
 }
@@ -49,11 +49,11 @@ NUM
 %%
 class ToYLexer implements ToY.Lexer {
     InputStreamReader it;
-    Yylex yylex;
+    Lexer lexer;
 
     public ToYLexer(InputStream is) {
         it = new InputStreamReader(is);
-        yylex = new Yylex(it);
+        lexer = new Lexer(it);
     }
 
     @Override
@@ -61,7 +61,7 @@ class ToYLexer implements ToY.Lexer {
         System.err.println(s);
     }
 
-    ParserToken yyval;
+    ParserToken yylval;
     @Override 
     public Object getLVal() {
         return yylval;
@@ -69,6 +69,6 @@ class ToYLexer implements ToY.Lexer {
 
     @Override
     public int yylex () throws IOException {
-        return yylex.yylex();
+        return lexer.yylex();
     }
 }
