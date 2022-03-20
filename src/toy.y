@@ -1,13 +1,14 @@
 %language "Java"
 
-%define api.parser.class {ToYParser}
+%define api.parser.class { ToYParser }
+//%define api.value.type { Token }
 %define api.parser.public
 %define parse.error verbose
 
 %code imports {
     import java.io.IOException;
     import java.io.InputStream;
-    import java.io.InpusStreamReader;
+    import java.io.InputStreamReader;
     import java.io.Reader;
     import java.io.StreamTokenizer;
 }
@@ -21,7 +22,7 @@
 }
 
 %token <Integer> NUM
-%type exp
+%type <Integer> exp
 
 %%
 input: line | input line;
@@ -30,8 +31,8 @@ line: '\n'
 | exp '\n'  {System.out.println($exp);}
 | error '\n'
 ;
-exp:
-NUM                 { $$ = $1; }
+exp: 
+NUM            
 | exp '=' exp       { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
 | exp '+' exp       { $$ = $1 + $3; }
 | exp '-' exp       { $$ = $1 - $3; }
@@ -67,7 +68,7 @@ class ToYLexer implements ToY.Lexer {
     }
 
     @Override
-    public int yylex () thows IOException {
+    public int yylex () throws IOException {
         return yylex.yylex();
     }
 }
