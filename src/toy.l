@@ -41,7 +41,7 @@ StringBuffer string = new StringBuffer();
 
 public static void main(String[] args) throws FileNotFoundException, IOException {
     FileReader yyinput = new FileReader(args[0]);
-    Lexer yylex = new Lexer(yyinput);
+    Yylex yylex = new Yylex(yyinput);
     Token token;
     while ((token = yylex.yylex()) != null) {
         System.out.println(token.text);

@@ -47,13 +47,13 @@ NUM
 ;
 
 %%
-class ToYLexer implements ToY.Lexer {
+class ToYLexer implements Lexer {
     InputStreamReader it;
-    Lexer lexer;
+    Yylex yylex;
 
     public ToYLexer(InputStream is) {
         it = new InputStreamReader(is);
-        lexer = new Lexer(it);
+        yylex = new Yylex(it);
     }
 
     @Override
@@ -69,6 +69,6 @@ class ToYLexer implements ToY.Lexer {
 
     @Override
     public int yylex () throws IOException {
-        return lexer.yylex();
+        return yylex.yylex();
     }
 }
