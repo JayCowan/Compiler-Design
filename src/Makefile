@@ -1,7 +1,7 @@
 default:
 	clear
 	jflex toy.l
-	#bison toy.y -L java
+	bison toy.y -L java
 	javac *.java
 	java Lexer input.txt
 test:
