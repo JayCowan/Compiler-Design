@@ -3,7 +3,7 @@ default:
 	jflex toy.l
 	bison Parser.y -L java
 	javac *.java
-	java Lexer input.txt
+	java Parser input.txt
 test:
 	java -cp toy
 clean:

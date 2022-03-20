@@ -1,6 +1,6 @@
 %language "Java"
 
-%define api.parser.class { Parser }
+%define api.parser.class { ToYParser }
 //%define api.value.type { Token }
 %define api.parser.public
 %define parse.error verbose
@@ -15,8 +15,8 @@
 
 %code {
     public static void main(String[] args) throws IOException {
-        Lexer l = new Lexer(System.in);
-        Parser p = new Parser(l);
+        ToYLexer l = new ToYLexer(System.in);
+        ToYParser p = new ToYParser(l);
         if (!p.parse()) System.out.println("INVALID");
     }
 }
@@ -61,7 +61,7 @@ class ToYLexer implements ToY.Lexer {
         System.err.println(s);
     }
 
-    ParserToken yylval;
+    Token yylval;
     @Override 
     public Object getLVal() {
         return yylval;

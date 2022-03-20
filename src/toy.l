@@ -33,6 +33,7 @@ enum TokenType {
 %%
 
 %unicode
+%public
 
 %{
 
