@@ -1,7 +1,7 @@
 %language "Java"
 
 %define api.parser.class { ToYParser }
-//%define api.value.type { Token }
+%define api.value.type { Token }
 %define api.parser.public
 %define parse.error verbose
 
@@ -36,18 +36,32 @@ line: '\n'
 | error '\n'
 ;
 exp: 
+<<<<<<< HEAD
 NUM            
 | '-' exp %prec NEG { $$ = -$2; }
 | '!'               { $$ = 0; return YYERROR; }
+=======
+NUM
+| '!'               { $$ = 0; return YYERROR; }
+| '-' error         { $$ = 0; return YYERROR; }
+| '-' exp %prec NEG { $$ = -$2; }
+>>>>>>> fde78ccb6447d3f0f26c38b5e25884356ace3e12
 | exp '+' exp       { $$ = $1 + $3; }
 | exp '-' exp       { $$ = $1 - $3; }
+| exp '^' exp       { $$ = (int) Math.pow($1, $3); }
 | exp '*' exp       { $$ = $1 * $3; }
 | exp '/' exp       { $$ = $1 / $3; }
+<<<<<<< HEAD
 | exp '^' exp %prec NEG { $$ = (int) Math.pow($1, $3); }
 | exp '=' exp %prec NEG { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
 | '(' exp ')'       { $$ = $2; }
 | '(' error ')'     { $$ = 1111; }
 | '-' error         { $$ = 0; return YYERROR; }
+=======
+| exp '=' exp       { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
+| '(' exp ')'       { $$ = $2; }
+| '(' error ')'     { $$ = 1111; }
+>>>>>>> fde78ccb6447d3f0f26c38b5e25884356ace3e12
 ;
 
 %%
