@@ -2,4 +2,5 @@
 /src/Lexer.java
 /src/Lexer.java~
 /src/ToYParser.java
+/src/ToYParser.output
 *.class
