@@ -1,6 +1,5 @@
 default:
 	clear
-	jflex toy.l
 	bison ToYParser.y -L java
 	javac *.java
 	java ToYParser input.txt
