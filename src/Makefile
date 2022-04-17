@@ -3,7 +3,6 @@ default:
 	jflex toy.l
 	bison ToYParser.y -v --report=all
 	javac *.java
-	java ToYParser input.txt
 test:
 	java -cp toy
 clean:
