@@ -8,9 +8,14 @@ class Token {
         this.text = text;
         this.type = type;
     }
-
+    public String text() {
+        return this.text;
+    }
     public String toString() {
         return String.format("%s %s", type, text);
+    }
+    int typeToInt() {
+            return this.type.ordinal();
     }
 }
 
@@ -69,11 +74,10 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 %type Token
 
 // Tell JLex to name the generated class `Lexer`
-%class Lexer
+%class Yylex
 %char
 %line
 %column
-
 %eofval{ 
     return new Token(null, TokenType.Type_Null); 
 %eofval}
