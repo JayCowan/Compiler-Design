@@ -29,8 +29,7 @@ class Token {
 
 enum TokenType {
     Type_Null,
-    //Type_Input,
-    //Type_Letter,
+    Type_Struct,
     Type_Integer,
     Type_Other,
     Type_Keyword,
@@ -62,6 +61,7 @@ Other = [0-9&.]
 Keyword = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct")
 Conditional = ("if" | "then" | "else" | "for" | "return")
 ReservedFunction = "printf"
+
 //Input = [^\r\n]
 Terminator = \r|\n|\r\n
 WhiteSpace = {Terminator} | [ \t\f] | [\040\ n] | (" ")

@@ -25,8 +25,8 @@
     }
 }
 
-%token NUM STRING BOOL ID
-%type exp printf dec program
+%token NUM STRING
+%type exp printf
 
 %precedence NEG 
 %left '-' '+'
@@ -36,9 +36,6 @@
 
 
 %%
-program: %empty
-| struct program;
-
 input: line | input line;
 
 line: '\n'
@@ -65,11 +62,6 @@ printf:
 STRING
 | "printf" printf ';'   { $$ = new Token($1.val().toString(), TokenType.Type_String); }     
 ;
-dec:
-| "bool" dec '=' exp ';' 
-;
-struct:
-"struct" exp;
 %%
 class Struct {
     String name;
