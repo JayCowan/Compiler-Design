@@ -47,22 +47,8 @@ enum TokenType {
 %unicode
 
 %{
-
 StringBuffer string = new StringBuffer();
-public static void main(String[] args) throws FileNotFoundException, IOException {
-    List<Token> tokens = new ArrayList<Token>();
-    System.out.println("Start Lexer");
-    FileReader yyinput = new FileReader(args[0]);
-    Yylex yylex = new Yylex(yyinput);
-    Token token;
-    while ((token = yylex.yylex()).val != null) {
-        tokens.add(token);
-        System.out.println(token.toString());
-    }
-    System.out.println(tokens.toString());
-    System.out.println("End Lexer");
-}
-
+List<Token> tokens = new ArrayList<Token>();
 %}
 
 Int = [0-9] 
@@ -85,37 +71,43 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 
 // Tell JLex to have yylex() return a Token
 %type Token
-
+%debug
 %char
 %line
 %column
 %eofval{ 
     return new Token(null, TokenType.Type_Null); 
 %eofval}
+%eof{
+try {
+    System.out.println(tokens);
+} catch (Exception e) {
+
+}
+%eof}
 
 %%
 <YYINITIAL> {
 {ReservedFunction}+ {
-    return new Token(yytext(), TokenType.Type_Reserved_Function);
+    tokens.add(new Token(yytext(), TokenType.Type_Reserved_Function));
 }
 {Keyword}+ {
-    return new Token(yytext(), TokenType.Type_Keyword);
+    tokens.add(new Token(yytext(), TokenType.Type_Keyword));
 }
 {Bracket}+ {
-    return new Token(yytext(), TokenType.Type_Bracket);
+    tokens.add(new Token(yytext(), TokenType.Type_Bracket));
 }
 {Operator}+ {
-    return new Token(yytext(), TokenType.Type_Operator);
+    tokens.add(new Token(yytext(), TokenType.Type_Operator));
 }
 {Identifier}+ {
-    return new Token(yytext(), TokenType.Type_Identifier);
+    tokens.add(new Token(yytext(), TokenType.Type_Identifier));
 }
 {WhiteSpace}+ {
-    return new Token(yytext(), TokenType.Type_White_Space);
+    tokens.add(new Token(yytext(), TokenType.Type_White_Space));
 }
 {Integer}+ {
-    
-    return new Token(yytext(), TokenType.Type_Integer);
+    tokens.add(new Token(yytext(), TokenType.Type_Integer));
 }
 \" {
     string.setLength(0);
@@ -125,10 +117,10 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 //    return new Token(yytext(), TokenType.Type_Letter);
 //}
 {Other}+ {
-    return new Token(yytext(), TokenType.Type_Other);
+    tokens.add(new Token(yytext(), TokenType.Type_Other));
 }
 {Semicolon}+ {
-    return new Token(yytext(), TokenType.Type_Semicolon);
+    tokens.add(new Token(yytext(), TokenType.Type_Semicolon));
 }
 //{Input}+ {
 //   return new Token(yytext(), TokenType.Type_Input);
@@ -138,7 +130,7 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 <STRING> {
 \" {
     yybegin(YYINITIAL);
-    return new Token(string.toString(), TokenType.Type_String);
+    tokens.add(new Token(string.toString(), TokenType.Type_String));
 }
 [^\n\r\"\\]+ {
     string.append(yytext());

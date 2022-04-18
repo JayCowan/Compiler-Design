@@ -56,6 +56,7 @@ class Yylex {
 
   /** Initial size of the lookahead buffer. */
   private static final int ZZ_BUFFERSIZE = 16384;
+  private static final String ZZ_NL = System.getProperty("line.separator");
 
   // Lexical states.
   public static final int YYINITIAL = 0;
@@ -546,26 +547,11 @@ class Yylex {
   private boolean zzAtBOL = true;
 
   /** Whether the user-EOF-code has already been executed. */
-  @SuppressWarnings("unused")
   private boolean zzEOFDone;
 
   /* user code: */
-
 StringBuffer string = new StringBuffer();
-public static void main(String[] args) throws FileNotFoundException, IOException {
-    List<Token> tokens = new ArrayList<Token>();
-    System.out.println("Start Lexer");
-    FileReader yyinput = new FileReader(args[0]);
-    Yylex yylex = new Yylex(yyinput);
-    Token token;
-    while ((token = yylex.yylex()).val != null) {
-        tokens.add(token);
-        System.out.println(token.toString());
-    }
-    System.out.println(tokens.toString());
-    System.out.println("End Lexer");
-}
-
+List<Token> tokens = new ArrayList<Token>();
 
 
   /**
@@ -577,6 +563,23 @@ public static void main(String[] args) throws FileNotFoundException, IOException
     this.zzReader = in;
   }
 
+
+  private static String zzToPrintable(String str) {
+    StringBuilder builder = new StringBuilder();
+    for (int n = 0 ; n < str.length() ; ) {
+      int ch = str.codePointAt(n);
+      int charCount = Character.charCount(ch);
+      n += charCount;
+      if (ch > 31 && ch < 127) {
+        builder.append((char)ch);
+      } else if (charCount == 1) {
+        builder.append(String.format("\\u%04X", ch));
+      } else {
+        builder.append(String.format("\\U%06X", ch));
+      }
+    }
+    return builder.toString();
+  }
   /**
    * Translates raw input code points to DFA table row
    */
@@ -811,6 +814,23 @@ public static void main(String[] args) throws FileNotFoundException, IOException
   }
 
 
+  /**
+   * Contains user EOF-code, which will be executed exactly once,
+   * when the end of file is reached
+   */
+  private void zzDoEOF() {
+    if (!zzEOFDone) {
+      zzEOFDone = true;
+    
+try {
+    System.out.println(tokens);
+} catch (Exception e) {
+
+}
+    }
+  }
+
+
 
 
   /**
@@ -958,8 +978,11 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
+            zzDoEOF();
             switch (zzLexicalState) {
             case STRING: {
+              System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: <<EOF>>");
+              System.out.println("action [144] { throw new Error(\"unexpected end of file\"); }");
               throw new Error("unexpected end of file");
             }  // fall though
             case 62: break;
@@ -971,99 +994,189 @@ public static void main(String[] args) throws FileNotFoundException, IOException
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [157] { throw new Error(\"Illegal character <\"+yytext()+\">\"); }");
             { throw new Error("Illegal character <"+yytext()+">");
             }
             // fall through
           case 19: break;
           case 2:
-            { return new Token(yytext(), TokenType.Type_White_Space);
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [106] { tokens.add(new Token(yytext(), TokenType.Type_White_Space)); }");
+            { tokens.add(new Token(yytext(), TokenType.Type_White_Space));
             }
             // fall through
           case 20: break;
           case 3:
-            { return new Token(yytext(), TokenType.Type_Operator);
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [100] { tokens.add(new Token(yytext(), TokenType.Type_Operator)); }");
+            { tokens.add(new Token(yytext(), TokenType.Type_Operator));
             }
             // fall through
           case 21: break;
           case 4:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [112] { string.setLength(0);"+ZZ_NL+"    yybegin(STRING); }");
             { string.setLength(0);
     yybegin(STRING);
             }
             // fall through
           case 22: break;
           case 5:
-            { return new Token(yytext(), TokenType.Type_Identifier);
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [103] { tokens.add(new Token(yytext(), TokenType.Type_Identifier)); }");
+            { tokens.add(new Token(yytext(), TokenType.Type_Identifier));
             }
             // fall through
           case 23: break;
           case 6:
-            { return new Token(yytext(), TokenType.Type_Other);
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [119] { tokens.add(new Token(yytext(), TokenType.Type_Other)); }");
+            { tokens.add(new Token(yytext(), TokenType.Type_Other));
             }
             // fall through
           case 24: break;
           case 7:
-            { return new Token(yytext(), TokenType.Type_Bracket);
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [97] { tokens.add(new Token(yytext(), TokenType.Type_Bracket)); }");
+            { tokens.add(new Token(yytext(), TokenType.Type_Bracket));
             }
             // fall through
           case 25: break;
           case 8:
-            { return new Token(yytext(), TokenType.Type_Integer);
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [109] { tokens.add(new Token(yytext(), TokenType.Type_Integer)); }");
+            { tokens.add(new Token(yytext(), TokenType.Type_Integer));
             }
             // fall through
           case 26: break;
           case 9:
-            { return new Token(yytext(), TokenType.Type_Semicolon);
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [122] { tokens.add(new Token(yytext(), TokenType.Type_Semicolon)); }");
+            { tokens.add(new Token(yytext(), TokenType.Type_Semicolon));
             }
             // fall through
           case 27: break;
           case 10:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [135] { string.append(yytext()); }");
             { string.append(yytext());
             }
             // fall through
           case 28: break;
           case 11:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [131] { yybegin(YYINITIAL);"+ZZ_NL+"    tokens.add(new Token(string.toString(), TokenType.Type_String)); }");
             { yybegin(YYINITIAL);
-    return new Token(string.toString(), TokenType.Type_String);
+    tokens.add(new Token(string.toString(), TokenType.Type_String));
             }
             // fall through
           case 29: break;
           case 12:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [153] { string.append(\'\\\\\'); }");
             { string.append('\\');
             }
             // fall through
           case 30: break;
           case 13:
-            { return new Token(yytext(), TokenType.Type_Keyword);
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [94] { tokens.add(new Token(yytext(), TokenType.Type_Keyword)); }");
+            { tokens.add(new Token(yytext(), TokenType.Type_Keyword));
             }
             // fall through
           case 31: break;
           case 14:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [150] { string.append(\'\\\"\'); }");
             { string.append('\"');
             }
             // fall through
           case 32: break;
           case 15:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [141] { throw new Error(\"Bad string literal\" + string.toString()); }");
             { throw new Error("Bad string literal" + string.toString());
             }
             // fall through
           case 33: break;
           case 16:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [147] { string.append(\'\\r\'); }");
             { string.append('\r');
             }
             // fall through
           case 34: break;
           case 17:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [138] { string.append(\'\\t\'); }");
             { string.append('\t');
             }
             // fall through
           case 35: break;
           case 18:
-            { return new Token(yytext(), TokenType.Type_Reserved_Function);
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [91] { tokens.add(new Token(yytext(), TokenType.Type_Reserved_Function)); }");
+            { tokens.add(new Token(yytext(), TokenType.Type_Reserved_Function));
             }
             // fall through
           case 36: break;
           default:
             zzScanError(ZZ_NO_MATCH);
+        }
+      }
+    }
+  }
+
+  /**
+   * Runs the scanner on input files.
+   *
+   * This main method is the debugging routine for the scanner.
+   * It prints debugging information about each returned token to
+   * System.out until the end of file is reached, or an error occured.
+   *
+   * @param argv   the command line, contains the filenames to run
+   *               the scanner on.
+   */
+  public static void main(String[] argv) {
+    if (argv.length == 0) {
+      System.out.println("Usage : java Yylex [ --encoding <name> ] <inputfile(s)>");
+    }
+    else {
+      int firstFilePos = 0;
+      String encodingName = "UTF-8";
+      if (argv[0].equals("--encoding")) {
+        firstFilePos = 2;
+        encodingName = argv[1];
+        try {
+          // Side-effect: is encodingName valid?
+          java.nio.charset.Charset.forName(encodingName);
+        } catch (Exception e) {
+          System.out.println("Invalid encoding '" + encodingName + "'");
+          return;
+        }
+      }
+      for (int i = firstFilePos; i < argv.length; i++) {
+        Yylex scanner = null;
+        try {
+          java.io.FileInputStream stream = new java.io.FileInputStream(argv[i]);
+          java.io.Reader reader = new java.io.InputStreamReader(stream, encodingName);
+          scanner = new Yylex(reader);
+          do {
+            System.out.println(scanner.yylex());
+          } while (!scanner.zzAtEOF);
+
+        }
+        catch (java.io.FileNotFoundException e) {
+          System.out.println("File not found : \""+argv[i]+"\"");
+        }
+        catch (java.io.IOException e) {
+          System.out.println("IO error scanning file \""+argv[i]+"\"");
+          System.out.println(e);
+        }
+        catch (Exception e) {
+          System.out.println("Unexpected exception:");
+          e.printStackTrace();
         }
       }
     }
