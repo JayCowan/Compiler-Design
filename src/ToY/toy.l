@@ -1,3 +1,5 @@
+package ToY;
+
 import java.io.*;
 
 class Token {
@@ -38,18 +40,18 @@ enum TokenType {
 %%
 
 %unicode
-%public
 
 %{
 
 StringBuffer string = new StringBuffer();
 
 public static void main(String[] args) throws FileNotFoundException, IOException {
+    System.out.println("Start Lexer");
     FileReader yyinput = new FileReader(args[0]);
     Yylex yylex = new Yylex(yyinput);
     Token token;
-    while ((token = yylex.yylex()) != null) {
-        System.out.println(token.text);
+    while ((token = yylex.yylex()).text != null) {
+        System.out.println(token.toString());
     }
 }
 
@@ -73,8 +75,6 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 // Tell JLex to have yylex() return a Token
 %type Token
 
-// Tell JLex to name the generated class `Lexer`
-%class Yylex
 %char
 %line
 %column
