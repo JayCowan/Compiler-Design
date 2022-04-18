@@ -1,0 +1,4 @@
+#invalid
+
+int a;
+a = -567;
