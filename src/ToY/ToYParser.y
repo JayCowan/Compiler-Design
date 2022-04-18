@@ -27,26 +27,25 @@
 }
 
 %token NUM STRING
-%type exp printf str
+%type exp printf
 
 %precedence NEG 
 %left '-' '+'
 %left '*' '/'
 %right '^'        /* exponentiation */
-%left '='
+%nonassoc '='
 
 
 %%
 input: line | input line;
 
 line: '\n'
-| printf '\n' 
+| printf '\n' {System.out.println($printf);}
 | exp '\n'  {System.out.println($exp);}
 | error '\n'
 ;
 exp:
 NUM                 { $$ = $1;}
-| exp exp           { if ($1.type == TokenType.Type_Integer && $2.type == TokenType.Type_Integer) $$ = new Token(($1.parseInt() * 10) + $2.parseInt()}
 | '!'               { return YYERROR; }
 | '-' error         { return YYERROR; }
 | '-' exp %prec NEG { $$ = new Token((-($2.parseInt())), TokenType.Type_Integer); }
@@ -59,12 +58,9 @@ NUM                 { $$ = $1;}
 | '(' exp ')'       { $$ = new Token($2.parseInt(), TokenType.Type_Integer);; }
 | '(' error ')'     { return YYERROR; }
 ;
-str: 
-STRING              { $$ = $1; }
-;
 printf:
-STRING                  { $$ = new Token($1.val().toString(), TokenType.Type_String); }
-| "printf" printf ';'   { System.out.println($2);}     
+STRING
+| "printf" printf ';'   { $$ = new Token($1.val().toString(), TokenType.Type_String); }     
 ;
 %%
 class ToYLexer implements ToYParser.Lexer {

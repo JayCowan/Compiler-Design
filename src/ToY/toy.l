@@ -21,7 +21,7 @@ class Token {
     public String toString() {
         return String.format("%s %s", type, val.toString());
     }
-    int typeToInt() {
+    public int typeToInt() {
             return this.type.ordinal();
     }
 }
@@ -29,7 +29,7 @@ class Token {
 enum TokenType {
     Type_Null,
     //Type_Input,
-    Type_Letter,
+    //Type_Letter,
     Type_Integer,
     Type_Other,
     Type_Keyword,
@@ -65,11 +65,14 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 
 %}
 
-Integer = [0-9]
-Letter = [A-Z, a-z]
+Int = [0-9] 
+Decimal = [0-9]{Int}*
+NegDec = [-]({Int}|{Decimal})
+Integer = ({NegDec}|{Decimal}|{Int})
+//Letter = [A-Z, a-z]
 Other = [0-9&.]
 Keyword = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct" | "if" | "then" | "else" | "for" | "return")
-ReservedFunction = ("printf")
+ReservedFunction = "printf"
 //Input = [^\r\n]
 Terminator = \r|\n|\r\n
 WhiteSpace = {Terminator} | [ \t\f] | [\040\ n] | (" ")
@@ -111,15 +114,16 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
     return new Token(yytext(), TokenType.Type_White_Space);
 }
 {Integer}+ {
+    
     return new Token(yytext(), TokenType.Type_Integer);
 }
 \" {
     string.setLength(0);
     yybegin(STRING);
 }
-{Letter}+ {
-    return new Token(yytext(), TokenType.Type_Letter);
-}
+//{Letter}+ {
+//    return new Token(yytext(), TokenType.Type_Letter);
+//}
 {Other}+ {
     return new Token(yytext(), TokenType.Type_Other);
 }
@@ -143,7 +147,10 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
     string.append('\t');
 }
 \\n {
-    string.append('\n');
+    throw new Error("Bad string literal" + string.toString());
+}
+<<EOF>> {
+    throw new Error("unexpected end of file");
 }
 \\r {
     string.append('\r');

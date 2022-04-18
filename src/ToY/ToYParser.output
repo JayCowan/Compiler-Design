@@ -1,23 +1,3 @@
-Nonterminals useless in grammar
-
-    str
-
-
-Rules useless in grammar
-
-   22 str: STRING
-
-
-State 15 conflicts: 3 shift/reduce
-State 28 conflicts: 9 shift/reduce
-State 33 conflicts: 3 shift/reduce, 5 reduce/reduce
-State 34 conflicts: 3 shift/reduce
-State 35 conflicts: 3 shift/reduce
-State 36 conflicts: 3 shift/reduce
-State 37 conflicts: 3 shift/reduce
-State 38 conflicts: 3 shift/reduce
-
-
 Grammar
 
     0 $accept: input $end
@@ -31,42 +11,41 @@ Grammar
     6     | error '\n'
 
     7 exp: NUM
-    8    | exp exp
-    9    | '!'
-   10    | '-' error
-   11    | '-' exp
-   12    | exp '+' exp
-   13    | exp '-' exp
-   14    | exp '^' exp
-   15    | exp '*' exp
-   16    | exp '/' exp
-   17    | exp '=' exp
-   18    | '(' exp ')'
-   19    | '(' error ')'
+    8    | '!'
+    9    | '-' error
+   10    | '-' exp
+   11    | exp '+' exp
+   12    | exp '-' exp
+   13    | exp '^' exp
+   14    | exp '*' exp
+   15    | exp '/' exp
+   16    | exp '=' exp
+   17    | '(' exp ')'
+   18    | '(' error ')'
 
-   20 printf: STRING
-   21       | "printf" printf ';'
+   19 printf: STRING
+   20       | "printf" printf ';'
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     '\n' (10) 3 4 5 6
-    '!' (33) 9
-    '(' (40) 18 19
-    ')' (41) 18 19
-    '*' (42) 15
-    '+' (43) 12
-    '-' (45) 10 11 13
-    '/' (47) 16
-    ';' (59) 21
-    '=' (61) 17
-    '^' (94) 14
-    error (256) 6 10 19
+    '!' (33) 8
+    '(' (40) 17 18
+    ')' (41) 17 18
+    '*' (42) 14
+    '+' (43) 11
+    '-' (45) 9 10 12
+    '/' (47) 15
+    ';' (59) 20
+    '=' (61) 16
+    '^' (94) 13
+    error (256) 6 9 18
     NUM (258) 7
-    STRING (259) 20
+    STRING (259) 19
     NEG (260)
-    "printf" (261) 21
+    "printf" (261) 20
 
 
 Nonterminals, with rules where they appear
@@ -80,11 +59,11 @@ Nonterminals, with rules where they appear
         on left: 3 4 5 6
         on right: 1 2
     exp (21)
-        on left: 7 8 9 10 11 12 13 14 15 16 17 18 19
-        on right: 5 8 11 12 13 14 15 16 17 18
+        on left: 7 8 9 10 11 12 13 14 15 16 17 18
+        on right: 5 10 11 12 13 14 15 16 17
     printf (22)
-        on left: 20 21
-        on right: 4 21
+        on left: 19 20
+        on right: 4 20
 
 
 State 0
@@ -97,20 +76,19 @@ State 0
     5     | • exp '\n'
     6     | • error '\n'
     7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   13    | • exp '-' exp
-   14    | • exp '^' exp
-   15    | • exp '*' exp
-   16    | • exp '/' exp
-   17    | • exp '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
-   20 printf: • STRING
-   21       | • "printf" printf ';'
+    8    | • '!'
+    9    | • '-' error
+   10    | • '-' exp
+   11    | • exp '+' exp
+   12    | • exp '-' exp
+   13    | • exp '^' exp
+   14    | • exp '*' exp
+   15    | • exp '/' exp
+   16    | • exp '=' exp
+   17    | • '(' exp ')'
+   18    | • '(' error ')'
+   19 printf: • STRING
+   20       | • "printf" printf ';'
 
     error     shift, and go to state 1
     NUM       shift, and go to state 2
@@ -143,28 +121,27 @@ State 2
 
 State 3
 
-   20 printf: STRING •
+   19 printf: STRING •
 
-    $default  reduce using rule 20 (printf)
+    $default  reduce using rule 19 (printf)
 
 
 State 4
 
     7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   10    | '-' • error
-   11    | • '-' exp
-   11    | '-' • exp
-   12    | • exp '+' exp
-   13    | • exp '-' exp
-   14    | • exp '^' exp
-   15    | • exp '*' exp
-   16    | • exp '/' exp
-   17    | • exp '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+    8    | • '!'
+    9    | • '-' error
+    9    | '-' • error
+   10    | • '-' exp
+   10    | '-' • exp
+   11    | • exp '+' exp
+   12    | • exp '-' exp
+   13    | • exp '^' exp
+   14    | • exp '*' exp
+   15    | • exp '/' exp
+   16    | • exp '=' exp
+   17    | • '(' exp ')'
+   18    | • '(' error ')'
 
     error  shift, and go to state 14
     NUM    shift, and go to state 2
@@ -184,28 +161,27 @@ State 5
 
 State 6
 
-    9 exp: '!' •
+    8 exp: '!' •
 
-    $default  reduce using rule 9 (exp)
+    $default  reduce using rule 8 (exp)
 
 
 State 7
 
     7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   13    | • exp '-' exp
-   14    | • exp '^' exp
-   15    | • exp '*' exp
-   16    | • exp '/' exp
-   17    | • exp '=' exp
-   18    | • '(' exp ')'
-   18    | '(' • exp ')'
-   19    | • '(' error ')'
-   19    | '(' • error ')'
+    8    | • '!'
+    9    | • '-' error
+   10    | • '-' exp
+   11    | • exp '+' exp
+   12    | • exp '-' exp
+   13    | • exp '^' exp
+   14    | • exp '*' exp
+   15    | • exp '/' exp
+   16    | • exp '=' exp
+   17    | • '(' exp ')'
+   17    | '(' • exp ')'
+   18    | • '(' error ')'
+   18    | '(' • error ')'
 
     error  shift, and go to state 16
     NUM    shift, and go to state 2
@@ -218,9 +194,9 @@ State 7
 
 State 8
 
-   20 printf: • STRING
-   21       | • "printf" printf ';'
-   21       | "printf" • printf ';'
+   19 printf: • STRING
+   20       | • "printf" printf ';'
+   20       | "printf" • printf ';'
 
     STRING    shift, and go to state 3
     "printf"  shift, and go to state 8
@@ -237,20 +213,19 @@ State 9
     5     | • exp '\n'
     6     | • error '\n'
     7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   13    | • exp '-' exp
-   14    | • exp '^' exp
-   15    | • exp '*' exp
-   16    | • exp '/' exp
-   17    | • exp '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
-   20 printf: • STRING
-   21       | • "printf" printf ';'
+    8    | • '!'
+    9    | • '-' error
+   10    | • '-' exp
+   11    | • exp '+' exp
+   12    | • exp '-' exp
+   13    | • exp '^' exp
+   14    | • exp '*' exp
+   15    | • exp '/' exp
+   16    | • exp '=' exp
+   17    | • '(' exp ')'
+   18    | • '(' error ')'
+   19 printf: • STRING
+   20       | • "printf" printf ';'
 
     $end      shift, and go to state 19
     error     shift, and go to state 1
@@ -277,28 +252,13 @@ State 10
 State 11
 
     5 line: exp • '\n'
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+   11 exp: exp • '+' exp
+   12    | exp • '-' exp
+   13    | exp • '^' exp
+   14    | exp • '*' exp
+   15    | exp • '/' exp
+   16    | exp • '=' exp
 
-    NUM   shift, and go to state 2
     '-'   shift, and go to state 21
     '+'   shift, and go to state 22
     '*'   shift, and go to state 23
@@ -306,17 +266,13 @@ State 11
     '^'   shift, and go to state 25
     '='   shift, and go to state 26
     '\n'  shift, and go to state 27
-    '!'   shift, and go to state 6
-    '('   shift, and go to state 7
-
-    exp  go to state 28
 
 
 State 12
 
     4 line: printf • '\n'
 
-    '\n'  shift, and go to state 29
+    '\n'  shift, and go to state 28
 
 
 State 13
@@ -328,167 +284,69 @@ State 13
 
 State 14
 
-   10 exp: '-' error •
+    9 exp: '-' error •
 
-    $default  reduce using rule 10 (exp)
+    $default  reduce using rule 9 (exp)
 
 
 State 15
 
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   11    | '-' exp •  [NUM, '\n', '!', '(', ')']
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+   10 exp: '-' exp •  ['\n', ')']
+   11    | exp • '+' exp
+   12    | exp • '-' exp
+   13    | exp • '^' exp
+   14    | exp • '*' exp
+   15    | exp • '/' exp
+   16    | exp • '=' exp
 
-    NUM  shift, and go to state 2
     '-'  shift, and go to state 21
     '+'  shift, and go to state 22
     '*'  shift, and go to state 23
     '/'  shift, and go to state 24
     '^'  shift, and go to state 25
     '='  shift, and go to state 26
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
 
-    NUM       [reduce using rule 11 (exp)]
-    '!'       [reduce using rule 11 (exp)]
-    '('       [reduce using rule 11 (exp)]
-    $default  reduce using rule 11 (exp)
+    $default  reduce using rule 10 (exp)
 
-    exp  go to state 28
-
-    Conflict between rule 11 and token '-' resolved as shift (NEG < '-').
-    Conflict between rule 11 and token '+' resolved as shift (NEG < '+').
-    Conflict between rule 11 and token '*' resolved as shift (NEG < '*').
-    Conflict between rule 11 and token '/' resolved as shift (NEG < '/').
-    Conflict between rule 11 and token '^' resolved as shift (NEG < '^').
-    Conflict between rule 11 and token '=' resolved as shift (NEG < '=').
-
-    shift/reduce conflict on token NUM:
-       11 exp: '-' exp •
-        7 exp: • NUM
-      Example: '-' exp • NUM
-      Shift derivation
-        exp
-        ↳ 11: '-' exp
-                  ↳ 8: exp exp
-                           ↳ 7: • NUM
-      Reduce derivation
-        exp
-        ↳ 8: exp             exp
-             ↳ 11: '-' exp • ↳ 7: NUM
-
-    shift/reduce conflict on token '!':
-       11 exp: '-' exp •
-        9 exp: • '!'
-      Example: '-' exp • '!'
-      Shift derivation
-        exp
-        ↳ 11: '-' exp
-                  ↳ 8: exp exp
-                           ↳ 9: • '!'
-      Reduce derivation
-        exp
-        ↳ 8: exp             exp
-             ↳ 11: '-' exp • ↳ 9: '!'
-
-    shift/reduce conflict on token '(':
-       11 exp: '-' exp •
-       18 exp: • '(' exp ')'
-      Example: '-' exp • '(' exp ')'
-      Shift derivation
-        exp
-        ↳ 11: '-' exp
-                  ↳ 8: exp exp
-                           ↳ 18: • '(' exp ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp             exp
-             ↳ 11: '-' exp • ↳ 18: '(' exp ')'
-
-    shift/reduce conflict on token '(':
-       11 exp: '-' exp •
-       19 exp: • '(' error ')'
-      Example: '-' exp • '(' error ')'
-      Shift derivation
-        exp
-        ↳ 11: '-' exp
-                  ↳ 8: exp exp
-                           ↳ 19: • '(' error ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp             exp
-             ↳ 11: '-' exp • ↳ 19: '(' error ')'
-
+    Conflict between rule 10 and token '-' resolved as shift (NEG < '-').
+    Conflict between rule 10 and token '+' resolved as shift (NEG < '+').
+    Conflict between rule 10 and token '*' resolved as shift (NEG < '*').
+    Conflict between rule 10 and token '/' resolved as shift (NEG < '/').
+    Conflict between rule 10 and token '^' resolved as shift (NEG < '^').
+    Conflict between rule 10 and token '=' resolved as shift (NEG < '=').
 
 
 State 16
 
-   19 exp: '(' error • ')'
+   18 exp: '(' error • ')'
 
-    ')'  shift, and go to state 30
+    ')'  shift, and go to state 29
 
 
 State 17
 
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   18    | • '(' exp ')'
-   18    | '(' exp • ')'
-   19    | • '(' error ')'
+   11 exp: exp • '+' exp
+   12    | exp • '-' exp
+   13    | exp • '^' exp
+   14    | exp • '*' exp
+   15    | exp • '/' exp
+   16    | exp • '=' exp
+   17    | '(' exp • ')'
 
-    NUM  shift, and go to state 2
     '-'  shift, and go to state 21
     '+'  shift, and go to state 22
     '*'  shift, and go to state 23
     '/'  shift, and go to state 24
     '^'  shift, and go to state 25
     '='  shift, and go to state 26
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
-    ')'  shift, and go to state 31
-
-    exp  go to state 28
+    ')'  shift, and go to state 30
 
 
 State 18
 
-   21 printf: "printf" printf • ';'
+   20 printf: "printf" printf • ';'
 
-    ';'  shift, and go to state 32
+    ';'  shift, and go to state 31
 
 
 State 19
@@ -508,47 +366,66 @@ State 20
 State 21
 
     7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   10    | '-' • error
-   11    | • '-' exp
-   11    | '-' • exp
-   12    | • exp '+' exp
-   13    | • exp '-' exp
-   13    | exp '-' • exp
-   14    | • exp '^' exp
-   15    | • exp '*' exp
-   16    | • exp '/' exp
-   17    | • exp '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+    8    | • '!'
+    9    | • '-' error
+   10    | • '-' exp
+   11    | • exp '+' exp
+   12    | • exp '-' exp
+   12    | exp '-' • exp
+   13    | • exp '^' exp
+   14    | • exp '*' exp
+   15    | • exp '/' exp
+   16    | • exp '=' exp
+   17    | • '(' exp ')'
+   18    | • '(' error ')'
 
-    error  shift, and go to state 14
-    NUM    shift, and go to state 2
-    '-'    shift, and go to state 4
-    '!'    shift, and go to state 6
-    '('    shift, and go to state 7
+    NUM  shift, and go to state 2
+    '-'  shift, and go to state 4
+    '!'  shift, and go to state 6
+    '('  shift, and go to state 7
 
-    exp  go to state 33
+    exp  go to state 32
 
 
 State 22
 
     7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   12    | exp '+' • exp
-   13    | • exp '-' exp
-   14    | • exp '^' exp
-   15    | • exp '*' exp
-   16    | • exp '/' exp
-   17    | • exp '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+    8    | • '!'
+    9    | • '-' error
+   10    | • '-' exp
+   11    | • exp '+' exp
+   11    | exp '+' • exp
+   12    | • exp '-' exp
+   13    | • exp '^' exp
+   14    | • exp '*' exp
+   15    | • exp '/' exp
+   16    | • exp '=' exp
+   17    | • '(' exp ')'
+   18    | • '(' error ')'
+
+    NUM  shift, and go to state 2
+    '-'  shift, and go to state 4
+    '!'  shift, and go to state 6
+    '('  shift, and go to state 7
+
+    exp  go to state 33
+
+
+State 23
+
+    7 exp: • NUM
+    8    | • '!'
+    9    | • '-' error
+   10    | • '-' exp
+   11    | • exp '+' exp
+   12    | • exp '-' exp
+   13    | • exp '^' exp
+   14    | • exp '*' exp
+   14    | exp '*' • exp
+   15    | • exp '/' exp
+   16    | • exp '=' exp
+   17    | • '(' exp ')'
+   18    | • '(' error ')'
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -558,22 +435,21 @@ State 22
     exp  go to state 34
 
 
-State 23
+State 24
 
     7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   13    | • exp '-' exp
-   14    | • exp '^' exp
-   15    | • exp '*' exp
-   15    | exp '*' • exp
-   16    | • exp '/' exp
-   17    | • exp '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+    8    | • '!'
+    9    | • '-' error
+   10    | • '-' exp
+   11    | • exp '+' exp
+   12    | • exp '-' exp
+   13    | • exp '^' exp
+   14    | • exp '*' exp
+   15    | • exp '/' exp
+   15    | exp '/' • exp
+   16    | • exp '=' exp
+   17    | • '(' exp ')'
+   18    | • '(' error ')'
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -583,22 +459,21 @@ State 23
     exp  go to state 35
 
 
-State 24
+State 25
 
     7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   13    | • exp '-' exp
-   14    | • exp '^' exp
-   15    | • exp '*' exp
-   16    | • exp '/' exp
-   16    | exp '/' • exp
-   17    | • exp '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+    8    | • '!'
+    9    | • '-' error
+   10    | • '-' exp
+   11    | • exp '+' exp
+   12    | • exp '-' exp
+   13    | • exp '^' exp
+   13    | exp '^' • exp
+   14    | • exp '*' exp
+   15    | • exp '/' exp
+   16    | • exp '=' exp
+   17    | • '(' exp ')'
+   18    | • '(' error ')'
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -608,22 +483,21 @@ State 24
     exp  go to state 36
 
 
-State 25
+State 26
 
     7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   13    | • exp '-' exp
-   14    | • exp '^' exp
-   14    | exp '^' • exp
-   15    | • exp '*' exp
-   16    | • exp '/' exp
-   17    | • exp '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+    8    | • '!'
+    9    | • '-' error
+   10    | • '-' exp
+   11    | • exp '+' exp
+   12    | • exp '-' exp
+   13    | • exp '^' exp
+   14    | • exp '*' exp
+   15    | • exp '/' exp
+   16    | • exp '=' exp
+   16    | exp '=' • exp
+   17    | • '(' exp ')'
+   18    | • '(' error ')'
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -631,31 +505,6 @@ State 25
     '('  shift, and go to state 7
 
     exp  go to state 37
-
-
-State 26
-
-    7 exp: • NUM
-    8    | • exp exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   13    | • exp '-' exp
-   14    | • exp '^' exp
-   15    | • exp '*' exp
-   16    | • exp '/' exp
-   17    | • exp '=' exp
-   17    | exp '=' • exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
-
-    NUM  shift, and go to state 2
-    '-'  shift, and go to state 4
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
-
-    exp  go to state 38
 
 
 State 27
@@ -667,942 +516,173 @@ State 27
 
 State 28
 
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    8    | exp exp •  [NUM, '-', '+', '*', '/', '^', '=', '\n', '!', '(', ')']
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
-
-    NUM  shift, and go to state 2
-    '-'  shift, and go to state 21
-    '+'  shift, and go to state 22
-    '*'  shift, and go to state 23
-    '/'  shift, and go to state 24
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
-
-    NUM       [reduce using rule 8 (exp)]
-    '-'       [reduce using rule 8 (exp)]
-    '+'       [reduce using rule 8 (exp)]
-    '*'       [reduce using rule 8 (exp)]
-    '/'       [reduce using rule 8 (exp)]
-    '^'       [reduce using rule 8 (exp)]
-    '='       [reduce using rule 8 (exp)]
-    '!'       [reduce using rule 8 (exp)]
-    '('       [reduce using rule 8 (exp)]
-    $default  reduce using rule 8 (exp)
-
-    exp  go to state 28
-
-    shift/reduce conflict on token '+':
-        8 exp: exp exp •
-       12 exp: exp • '+' exp
-      Example: exp exp • '+' exp
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 12: exp • '+' exp
-      Reduce derivation
-        exp
-        ↳ 12: exp            '+' exp
-              ↳ 8: exp exp •
-
-    shift/reduce conflict on token '-':
-        8 exp: exp exp •
-       13 exp: exp • '-' exp
-      Example: exp exp • '-' exp
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 13: exp • '-' exp
-      Reduce derivation
-        exp
-        ↳ 13: exp            '-' exp
-              ↳ 8: exp exp •
-
-    shift/reduce conflict on token '^':
-        8 exp: exp exp •
-       14 exp: exp • '^' exp
-      Example: exp exp • '^' exp
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 14: exp • '^' exp
-      Reduce derivation
-        exp
-        ↳ 14: exp            '^' exp
-              ↳ 8: exp exp •
-
-    shift/reduce conflict on token '*':
-        8 exp: exp exp •
-       15 exp: exp • '*' exp
-      Example: exp exp • '*' exp
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 15: exp • '*' exp
-      Reduce derivation
-        exp
-        ↳ 15: exp            '*' exp
-              ↳ 8: exp exp •
-
-    shift/reduce conflict on token '/':
-        8 exp: exp exp •
-       16 exp: exp • '/' exp
-      Example: exp exp • '/' exp
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 16: exp • '/' exp
-      Reduce derivation
-        exp
-        ↳ 16: exp            '/' exp
-              ↳ 8: exp exp •
-
-    shift/reduce conflict on token '=':
-        8 exp: exp exp •
-       17 exp: exp • '=' exp
-      Example: exp exp • '=' exp
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 17: exp • '=' exp
-      Reduce derivation
-        exp
-        ↳ 17: exp            '=' exp
-              ↳ 8: exp exp •
-
-    shift/reduce conflict on token NUM:
-        8 exp: exp exp •
-        7 exp: • NUM
-      Example: exp exp • NUM
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 8: exp exp
-                          ↳ 7: • NUM
-      Reduce derivation
-        exp
-        ↳ 8: exp            exp
-             ↳ 8: exp exp • ↳ 7: NUM
-
-    shift/reduce conflict on token '!':
-        8 exp: exp exp •
-        9 exp: • '!'
-      Example: exp exp • '!'
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 8: exp exp
-                          ↳ 9: • '!'
-      Reduce derivation
-        exp
-        ↳ 8: exp            exp
-             ↳ 8: exp exp • ↳ 9: '!'
-
-    shift/reduce conflict on token '-':
-        8 exp: exp exp •
-       10 exp: • '-' error
-      Example: exp exp • '-' error
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 8: exp exp
-                          ↳ 10: • '-' error
-      Reduce derivation
-        exp
-        ↳ 8: exp            exp
-             ↳ 8: exp exp • ↳ 10: '-' error
-
-    shift/reduce conflict on token '-':
-        8 exp: exp exp •
-       11 exp: • '-' exp
-      Example: exp exp • '-' exp
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 8: exp exp
-                          ↳ 11: • '-' exp
-      Reduce derivation
-        exp
-        ↳ 13: exp            '-' exp
-              ↳ 8: exp exp •
-
-    shift/reduce conflict on token '(':
-        8 exp: exp exp •
-       18 exp: • '(' exp ')'
-      Example: exp exp • '(' exp ')'
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 8: exp exp
-                          ↳ 18: • '(' exp ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp            exp
-             ↳ 8: exp exp • ↳ 18: '(' exp ')'
-
-    shift/reduce conflict on token '(':
-        8 exp: exp exp •
-       19 exp: • '(' error ')'
-      Example: exp exp • '(' error ')'
-      Shift derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 8: exp exp
-                          ↳ 19: • '(' error ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp            exp
-             ↳ 8: exp exp • ↳ 19: '(' error ')'
-
-
-
-State 29
-
     4 line: printf '\n' •
 
     $default  reduce using rule 4 (line)
 
 
-State 30
+State 29
 
-   19 exp: '(' error ')' •
-
-    $default  reduce using rule 19 (exp)
-
-
-State 31
-
-   18 exp: '(' exp ')' •
+   18 exp: '(' error ')' •
 
     $default  reduce using rule 18 (exp)
 
 
+State 30
+
+   17 exp: '(' exp ')' •
+
+    $default  reduce using rule 17 (exp)
+
+
+State 31
+
+   20 printf: "printf" printf ';' •
+
+    $default  reduce using rule 20 (printf)
+
+
 State 32
 
-   21 printf: "printf" printf ';' •
+   11 exp: exp • '+' exp
+   12    | exp • '-' exp
+   12    | exp '-' exp •  ['-', '+', '\n', ')']
+   13    | exp • '^' exp
+   14    | exp • '*' exp
+   15    | exp • '/' exp
+   16    | exp • '=' exp
 
-    $default  reduce using rule 21 (printf)
+    '*'  shift, and go to state 23
+    '/'  shift, and go to state 24
+    '^'  shift, and go to state 25
+    '='  shift, and go to state 26
+
+    $default  reduce using rule 12 (exp)
+
+    Conflict between rule 12 and token '-' resolved as reduce (%left '-').
+    Conflict between rule 12 and token '+' resolved as reduce (%left '+').
+    Conflict between rule 12 and token '*' resolved as shift ('-' < '*').
+    Conflict between rule 12 and token '/' resolved as shift ('-' < '/').
+    Conflict between rule 12 and token '^' resolved as shift ('-' < '^').
+    Conflict between rule 12 and token '=' resolved as shift ('-' < '=').
 
 
 State 33
 
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   11    | '-' exp •  [NUM, '\n', '!', '(', ')']
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   13    | exp '-' exp •  [NUM, '-', '+', '\n', '!', '(', ')']
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+   11 exp: exp • '+' exp
+   11    | exp '+' exp •  ['-', '+', '\n', ')']
+   12    | exp • '-' exp
+   13    | exp • '^' exp
+   14    | exp • '*' exp
+   15    | exp • '/' exp
+   16    | exp • '=' exp
 
-    NUM  shift, and go to state 2
     '*'  shift, and go to state 23
     '/'  shift, and go to state 24
     '^'  shift, and go to state 25
     '='  shift, and go to state 26
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
 
-    NUM       [reduce using rule 11 (exp)]
-    NUM       [reduce using rule 13 (exp)]
-    '-'       reduce using rule 13 (exp)
-    '+'       reduce using rule 13 (exp)
-    '\n'      reduce using rule 11 (exp)
-    '\n'      [reduce using rule 13 (exp)]
-    '!'       [reduce using rule 11 (exp)]
-    '!'       [reduce using rule 13 (exp)]
-    '('       [reduce using rule 11 (exp)]
-    '('       [reduce using rule 13 (exp)]
-    ')'       reduce using rule 11 (exp)
-    ')'       [reduce using rule 13 (exp)]
     $default  reduce using rule 11 (exp)
 
-    exp  go to state 28
-
-    Conflict between rule 11 and token '-' resolved as shift (NEG < '-').
-    Conflict between rule 11 and token '+' resolved as shift (NEG < '+').
-    Conflict between rule 11 and token '*' resolved as shift (NEG < '*').
-    Conflict between rule 11 and token '/' resolved as shift (NEG < '/').
-    Conflict between rule 11 and token '^' resolved as shift (NEG < '^').
-    Conflict between rule 11 and token '=' resolved as shift (NEG < '=').
-    Conflict between rule 13 and token '-' resolved as reduce (%left '-').
-    Conflict between rule 13 and token '+' resolved as reduce (%left '+').
-    Conflict between rule 13 and token '*' resolved as shift ('-' < '*').
-    Conflict between rule 13 and token '/' resolved as shift ('-' < '/').
-    Conflict between rule 13 and token '^' resolved as shift ('-' < '^').
-    Conflict between rule 13 and token '=' resolved as shift ('-' < '=').
-
-    shift/reduce conflict on token NUM:
-       11 exp: '-' exp •
-        7 exp: • NUM
-      Example: '-' exp • NUM
-      Shift derivation
-        exp
-        ↳ 11: '-' exp
-                  ↳ 8: exp exp
-                           ↳ 7: • NUM
-      Reduce derivation
-        exp
-        ↳ 8: exp             exp
-             ↳ 11: '-' exp • ↳ 7: NUM
-
-    shift/reduce conflict on token '!':
-       11 exp: '-' exp •
-        9 exp: • '!'
-      Example: '-' exp • '!'
-      Shift derivation
-        exp
-        ↳ 11: '-' exp
-                  ↳ 8: exp exp
-                           ↳ 9: • '!'
-      Reduce derivation
-        exp
-        ↳ 8: exp             exp
-             ↳ 11: '-' exp • ↳ 9: '!'
-
-    shift/reduce conflict on token '(':
-       11 exp: '-' exp •
-       18 exp: • '(' exp ')'
-      Example: '-' exp • '(' exp ')'
-      Shift derivation
-        exp
-        ↳ 11: '-' exp
-                  ↳ 8: exp exp
-                           ↳ 18: • '(' exp ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp             exp
-             ↳ 11: '-' exp • ↳ 18: '(' exp ')'
-
-    shift/reduce conflict on token '(':
-       11 exp: '-' exp •
-       19 exp: • '(' error ')'
-      Example: '-' exp • '(' error ')'
-      Shift derivation
-        exp
-        ↳ 11: '-' exp
-                  ↳ 8: exp exp
-                           ↳ 19: • '(' error ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp             exp
-             ↳ 11: '-' exp • ↳ 19: '(' error ')'
-
-    reduce/reduce conflict on tokens NUM, '\n', '!', '(', ')':
-       11 exp: '-' exp •
-       13 exp: exp '-' exp •
-      Example: exp '-' exp •
-      First reduce derivation
-        exp
-        ↳ 8: exp exp
-                 ↳ 11: '-' exp •
-      Second reduce derivation
-        exp
-        ↳ 13: exp '-' exp •
-
-    shift/reduce conflict on token NUM:
-       13 exp: exp '-' exp •
-        7 exp: • NUM
-      Example: exp '-' exp • NUM
-      Shift derivation
-        exp
-        ↳ 13: exp '-' exp
-                      ↳ 8: exp exp
-                               ↳ 7: • NUM
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 13: exp '-' exp • ↳ 7: NUM
-
-    shift/reduce conflict on token '!':
-       13 exp: exp '-' exp •
-        9 exp: • '!'
-      Example: exp '-' exp • '!'
-      Shift derivation
-        exp
-        ↳ 13: exp '-' exp
-                      ↳ 8: exp exp
-                               ↳ 9: • '!'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 13: exp '-' exp • ↳ 9: '!'
-
-    shift/reduce conflict on token '(':
-       13 exp: exp '-' exp •
-       18 exp: • '(' exp ')'
-      Example: exp '-' exp • '(' exp ')'
-      Shift derivation
-        exp
-        ↳ 13: exp '-' exp
-                      ↳ 8: exp exp
-                               ↳ 18: • '(' exp ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 13: exp '-' exp • ↳ 18: '(' exp ')'
-
-    shift/reduce conflict on token '(':
-       13 exp: exp '-' exp •
-       19 exp: • '(' error ')'
-      Example: exp '-' exp • '(' error ')'
-      Shift derivation
-        exp
-        ↳ 13: exp '-' exp
-                      ↳ 8: exp exp
-                               ↳ 19: • '(' error ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 13: exp '-' exp • ↳ 19: '(' error ')'
-
+    Conflict between rule 11 and token '-' resolved as reduce (%left '-').
+    Conflict between rule 11 and token '+' resolved as reduce (%left '+').
+    Conflict between rule 11 and token '*' resolved as shift ('+' < '*').
+    Conflict between rule 11 and token '/' resolved as shift ('+' < '/').
+    Conflict between rule 11 and token '^' resolved as shift ('+' < '^').
+    Conflict between rule 11 and token '=' resolved as shift ('+' < '=').
 
 
 State 34
 
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   12    | exp '+' exp •  [NUM, '-', '+', '\n', '!', '(', ')']
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+   11 exp: exp • '+' exp
+   12    | exp • '-' exp
+   13    | exp • '^' exp
+   14    | exp • '*' exp
+   14    | exp '*' exp •  ['-', '+', '*', '/', '\n', ')']
+   15    | exp • '/' exp
+   16    | exp • '=' exp
 
-    NUM  shift, and go to state 2
-    '*'  shift, and go to state 23
-    '/'  shift, and go to state 24
     '^'  shift, and go to state 25
     '='  shift, and go to state 26
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
 
-    NUM       [reduce using rule 12 (exp)]
-    '!'       [reduce using rule 12 (exp)]
-    '('       [reduce using rule 12 (exp)]
-    $default  reduce using rule 12 (exp)
+    $default  reduce using rule 14 (exp)
 
-    exp  go to state 28
-
-    Conflict between rule 12 and token '-' resolved as reduce (%left '-').
-    Conflict between rule 12 and token '+' resolved as reduce (%left '+').
-    Conflict between rule 12 and token '*' resolved as shift ('+' < '*').
-    Conflict between rule 12 and token '/' resolved as shift ('+' < '/').
-    Conflict between rule 12 and token '^' resolved as shift ('+' < '^').
-    Conflict between rule 12 and token '=' resolved as shift ('+' < '=').
-
-    shift/reduce conflict on token NUM:
-       12 exp: exp '+' exp •
-        7 exp: • NUM
-      Example: exp '+' exp • NUM
-      Shift derivation
-        exp
-        ↳ 12: exp '+' exp
-                      ↳ 8: exp exp
-                               ↳ 7: • NUM
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 12: exp '+' exp • ↳ 7: NUM
-
-    shift/reduce conflict on token '!':
-       12 exp: exp '+' exp •
-        9 exp: • '!'
-      Example: exp '+' exp • '!'
-      Shift derivation
-        exp
-        ↳ 12: exp '+' exp
-                      ↳ 8: exp exp
-                               ↳ 9: • '!'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 12: exp '+' exp • ↳ 9: '!'
-
-    shift/reduce conflict on token '(':
-       12 exp: exp '+' exp •
-       18 exp: • '(' exp ')'
-      Example: exp '+' exp • '(' exp ')'
-      Shift derivation
-        exp
-        ↳ 12: exp '+' exp
-                      ↳ 8: exp exp
-                               ↳ 18: • '(' exp ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 12: exp '+' exp • ↳ 18: '(' exp ')'
-
-    shift/reduce conflict on token '(':
-       12 exp: exp '+' exp •
-       19 exp: • '(' error ')'
-      Example: exp '+' exp • '(' error ')'
-      Shift derivation
-        exp
-        ↳ 12: exp '+' exp
-                      ↳ 8: exp exp
-                               ↳ 19: • '(' error ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 12: exp '+' exp • ↳ 19: '(' error ')'
-
+    Conflict between rule 14 and token '-' resolved as reduce ('-' < '*').
+    Conflict between rule 14 and token '+' resolved as reduce ('+' < '*').
+    Conflict between rule 14 and token '*' resolved as reduce (%left '*').
+    Conflict between rule 14 and token '/' resolved as reduce (%left '/').
+    Conflict between rule 14 and token '^' resolved as shift ('*' < '^').
+    Conflict between rule 14 and token '=' resolved as shift ('*' < '=').
 
 
 State 35
 
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   15    | exp '*' exp •  [NUM, '-', '+', '*', '/', '\n', '!', '(', ')']
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+   11 exp: exp • '+' exp
+   12    | exp • '-' exp
+   13    | exp • '^' exp
+   14    | exp • '*' exp
+   15    | exp • '/' exp
+   15    | exp '/' exp •  ['-', '+', '*', '/', '\n', ')']
+   16    | exp • '=' exp
 
-    NUM  shift, and go to state 2
     '^'  shift, and go to state 25
     '='  shift, and go to state 26
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
 
-    NUM       [reduce using rule 15 (exp)]
-    '!'       [reduce using rule 15 (exp)]
-    '('       [reduce using rule 15 (exp)]
     $default  reduce using rule 15 (exp)
 
-    exp  go to state 28
-
-    Conflict between rule 15 and token '-' resolved as reduce ('-' < '*').
-    Conflict between rule 15 and token '+' resolved as reduce ('+' < '*').
+    Conflict between rule 15 and token '-' resolved as reduce ('-' < '/').
+    Conflict between rule 15 and token '+' resolved as reduce ('+' < '/').
     Conflict between rule 15 and token '*' resolved as reduce (%left '*').
     Conflict between rule 15 and token '/' resolved as reduce (%left '/').
-    Conflict between rule 15 and token '^' resolved as shift ('*' < '^').
-    Conflict between rule 15 and token '=' resolved as shift ('*' < '=').
-
-    shift/reduce conflict on token NUM:
-       15 exp: exp '*' exp •
-        7 exp: • NUM
-      Example: exp '*' exp • NUM
-      Shift derivation
-        exp
-        ↳ 15: exp '*' exp
-                      ↳ 8: exp exp
-                               ↳ 7: • NUM
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 15: exp '*' exp • ↳ 7: NUM
-
-    shift/reduce conflict on token '!':
-       15 exp: exp '*' exp •
-        9 exp: • '!'
-      Example: exp '*' exp • '!'
-      Shift derivation
-        exp
-        ↳ 15: exp '*' exp
-                      ↳ 8: exp exp
-                               ↳ 9: • '!'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 15: exp '*' exp • ↳ 9: '!'
-
-    shift/reduce conflict on token '(':
-       15 exp: exp '*' exp •
-       18 exp: • '(' exp ')'
-      Example: exp '*' exp • '(' exp ')'
-      Shift derivation
-        exp
-        ↳ 15: exp '*' exp
-                      ↳ 8: exp exp
-                               ↳ 18: • '(' exp ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 15: exp '*' exp • ↳ 18: '(' exp ')'
-
-    shift/reduce conflict on token '(':
-       15 exp: exp '*' exp •
-       19 exp: • '(' error ')'
-      Example: exp '*' exp • '(' error ')'
-      Shift derivation
-        exp
-        ↳ 15: exp '*' exp
-                      ↳ 8: exp exp
-                               ↳ 19: • '(' error ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 15: exp '*' exp • ↳ 19: '(' error ')'
-
+    Conflict between rule 15 and token '^' resolved as shift ('/' < '^').
+    Conflict between rule 15 and token '=' resolved as shift ('/' < '=').
 
 
 State 36
 
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   16    | exp '/' exp •  [NUM, '-', '+', '*', '/', '\n', '!', '(', ')']
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+   11 exp: exp • '+' exp
+   12    | exp • '-' exp
+   13    | exp • '^' exp
+   13    | exp '^' exp •  ['-', '+', '*', '/', '\n', ')']
+   14    | exp • '*' exp
+   15    | exp • '/' exp
+   16    | exp • '=' exp
 
-    NUM  shift, and go to state 2
     '^'  shift, and go to state 25
     '='  shift, and go to state 26
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
 
-    NUM       [reduce using rule 16 (exp)]
-    '!'       [reduce using rule 16 (exp)]
-    '('       [reduce using rule 16 (exp)]
-    $default  reduce using rule 16 (exp)
+    $default  reduce using rule 13 (exp)
 
-    exp  go to state 28
-
-    Conflict between rule 16 and token '-' resolved as reduce ('-' < '/').
-    Conflict between rule 16 and token '+' resolved as reduce ('+' < '/').
-    Conflict between rule 16 and token '*' resolved as reduce (%left '*').
-    Conflict between rule 16 and token '/' resolved as reduce (%left '/').
-    Conflict between rule 16 and token '^' resolved as shift ('/' < '^').
-    Conflict between rule 16 and token '=' resolved as shift ('/' < '=').
-
-    shift/reduce conflict on token NUM:
-       16 exp: exp '/' exp •
-        7 exp: • NUM
-      Example: exp '/' exp • NUM
-      Shift derivation
-        exp
-        ↳ 16: exp '/' exp
-                      ↳ 8: exp exp
-                               ↳ 7: • NUM
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 16: exp '/' exp • ↳ 7: NUM
-
-    shift/reduce conflict on token '!':
-       16 exp: exp '/' exp •
-        9 exp: • '!'
-      Example: exp '/' exp • '!'
-      Shift derivation
-        exp
-        ↳ 16: exp '/' exp
-                      ↳ 8: exp exp
-                               ↳ 9: • '!'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 16: exp '/' exp • ↳ 9: '!'
-
-    shift/reduce conflict on token '(':
-       16 exp: exp '/' exp •
-       18 exp: • '(' exp ')'
-      Example: exp '/' exp • '(' exp ')'
-      Shift derivation
-        exp
-        ↳ 16: exp '/' exp
-                      ↳ 8: exp exp
-                               ↳ 18: • '(' exp ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 16: exp '/' exp • ↳ 18: '(' exp ')'
-
-    shift/reduce conflict on token '(':
-       16 exp: exp '/' exp •
-       19 exp: • '(' error ')'
-      Example: exp '/' exp • '(' error ')'
-      Shift derivation
-        exp
-        ↳ 16: exp '/' exp
-                      ↳ 8: exp exp
-                               ↳ 19: • '(' error ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 16: exp '/' exp • ↳ 19: '(' error ')'
-
+    Conflict between rule 13 and token '-' resolved as reduce ('-' < '^').
+    Conflict between rule 13 and token '+' resolved as reduce ('+' < '^').
+    Conflict between rule 13 and token '*' resolved as reduce ('*' < '^').
+    Conflict between rule 13 and token '/' resolved as reduce ('/' < '^').
+    Conflict between rule 13 and token '^' resolved as shift (%right '^').
+    Conflict between rule 13 and token '=' resolved as shift ('^' < '=').
 
 
 State 37
 
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   14    | exp '^' exp •  [NUM, '-', '+', '*', '/', '\n', '!', '(', ')']
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
+   11 exp: exp • '+' exp
+   12    | exp • '-' exp
+   13    | exp • '^' exp
+   14    | exp • '*' exp
+   15    | exp • '/' exp
+   16    | exp • '=' exp
+   16    | exp '=' exp •  ['\n', ')']
 
-    NUM  shift, and go to state 2
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
-
-    NUM       [reduce using rule 14 (exp)]
-    '!'       [reduce using rule 14 (exp)]
-    '('       [reduce using rule 14 (exp)]
-    $default  reduce using rule 14 (exp)
-
-    exp  go to state 28
-
-    Conflict between rule 14 and token '-' resolved as reduce ('-' < '^').
-    Conflict between rule 14 and token '+' resolved as reduce ('+' < '^').
-    Conflict between rule 14 and token '*' resolved as reduce ('*' < '^').
-    Conflict between rule 14 and token '/' resolved as reduce ('/' < '^').
-    Conflict between rule 14 and token '^' resolved as shift (%right '^').
-    Conflict between rule 14 and token '=' resolved as shift ('^' < '=').
-
-    shift/reduce conflict on token NUM:
-       14 exp: exp '^' exp •
-        7 exp: • NUM
-      Example: exp '^' exp • NUM
-      Shift derivation
-        exp
-        ↳ 14: exp '^' exp
-                      ↳ 8: exp exp
-                               ↳ 7: • NUM
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 14: exp '^' exp • ↳ 7: NUM
-
-    shift/reduce conflict on token '!':
-       14 exp: exp '^' exp •
-        9 exp: • '!'
-      Example: exp '^' exp • '!'
-      Shift derivation
-        exp
-        ↳ 14: exp '^' exp
-                      ↳ 8: exp exp
-                               ↳ 9: • '!'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 14: exp '^' exp • ↳ 9: '!'
-
-    shift/reduce conflict on token '(':
-       14 exp: exp '^' exp •
-       18 exp: • '(' exp ')'
-      Example: exp '^' exp • '(' exp ')'
-      Shift derivation
-        exp
-        ↳ 14: exp '^' exp
-                      ↳ 8: exp exp
-                               ↳ 18: • '(' exp ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 14: exp '^' exp • ↳ 18: '(' exp ')'
-
-    shift/reduce conflict on token '(':
-       14 exp: exp '^' exp •
-       19 exp: • '(' error ')'
-      Example: exp '^' exp • '(' error ')'
-      Shift derivation
-        exp
-        ↳ 14: exp '^' exp
-                      ↳ 8: exp exp
-                               ↳ 19: • '(' error ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 14: exp '^' exp • ↳ 19: '(' error ')'
-
-
-
-State 38
-
-    7 exp: • NUM
-    8    | • exp exp
-    8    | exp • exp
-    9    | • '!'
-   10    | • '-' error
-   11    | • '-' exp
-   12    | • exp '+' exp
-   12    | exp • '+' exp
-   13    | • exp '-' exp
-   13    | exp • '-' exp
-   14    | • exp '^' exp
-   14    | exp • '^' exp
-   15    | • exp '*' exp
-   15    | exp • '*' exp
-   16    | • exp '/' exp
-   16    | exp • '/' exp
-   17    | • exp '=' exp
-   17    | exp • '=' exp
-   17    | exp '=' exp •  [NUM, '\n', '!', '(', ')']
-   18    | • '(' exp ')'
-   19    | • '(' error ')'
-
-    NUM  shift, and go to state 2
     '-'  shift, and go to state 21
     '+'  shift, and go to state 22
     '*'  shift, and go to state 23
     '/'  shift, and go to state 24
     '^'  shift, and go to state 25
     '='  shift, and go to state 26
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
 
-    NUM       [reduce using rule 17 (exp)]
-    '!'       [reduce using rule 17 (exp)]
-    '('       [reduce using rule 17 (exp)]
-    $default  reduce using rule 17 (exp)
+    $default  reduce using rule 16 (exp)
 
-    exp  go to state 28
-
-    Conflict between rule 17 and token '-' resolved as shift (NEG < '-').
-    Conflict between rule 17 and token '+' resolved as shift (NEG < '+').
-    Conflict between rule 17 and token '*' resolved as shift (NEG < '*').
-    Conflict between rule 17 and token '/' resolved as shift (NEG < '/').
-    Conflict between rule 17 and token '^' resolved as shift (NEG < '^').
-    Conflict between rule 17 and token '=' resolved as shift (NEG < '=').
-
-    shift/reduce conflict on token NUM:
-       17 exp: exp '=' exp •
-        7 exp: • NUM
-      Example: exp '=' exp • NUM
-      Shift derivation
-        exp
-        ↳ 17: exp '=' exp
-                      ↳ 8: exp exp
-                               ↳ 7: • NUM
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 17: exp '=' exp • ↳ 7: NUM
-
-    shift/reduce conflict on token '!':
-       17 exp: exp '=' exp •
-        9 exp: • '!'
-      Example: exp '=' exp • '!'
-      Shift derivation
-        exp
-        ↳ 17: exp '=' exp
-                      ↳ 8: exp exp
-                               ↳ 9: • '!'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 17: exp '=' exp • ↳ 9: '!'
-
-    shift/reduce conflict on token '(':
-       17 exp: exp '=' exp •
-       18 exp: • '(' exp ')'
-      Example: exp '=' exp • '(' exp ')'
-      Shift derivation
-        exp
-        ↳ 17: exp '=' exp
-                      ↳ 8: exp exp
-                               ↳ 18: • '(' exp ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 17: exp '=' exp • ↳ 18: '(' exp ')'
-
-    shift/reduce conflict on token '(':
-       17 exp: exp '=' exp •
-       19 exp: • '(' error ')'
-      Example: exp '=' exp • '(' error ')'
-      Shift derivation
-        exp
-        ↳ 17: exp '=' exp
-                      ↳ 8: exp exp
-                               ↳ 19: • '(' error ')'
-      Reduce derivation
-        exp
-        ↳ 8: exp                 exp
-             ↳ 17: exp '=' exp • ↳ 19: '(' error ')'
-
+    Conflict between rule 16 and token '-' resolved as shift (NEG < '-').
+    Conflict between rule 16 and token '+' resolved as shift (NEG < '+').
+    Conflict between rule 16 and token '*' resolved as shift (NEG < '*').
+    Conflict between rule 16 and token '/' resolved as shift (NEG < '/').
+    Conflict between rule 16 and token '^' resolved as shift (NEG < '^').
+    Conflict between rule 16 and token '=' resolved as shift (NEG < '=').
