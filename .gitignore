@@ -1,6 +1,4 @@
-/src/Scratch.java
-/src/Lexer.java
-/src/Lexer.java~
-/src/ToYParser.java
-/src/ToYParser.output
+/src/ToY/*.java
+/src/ToY/*.java~
+/src/ToY/*.output
 *.class

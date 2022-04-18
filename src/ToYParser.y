@@ -17,8 +17,12 @@
 %code {
     public static void main(String[] args) throws IOException {
         ToYLexer l = new ToYLexer(System.in);
+        System.out.println("Lexer Created");
         ToYParser p = new ToYParser(l);
-        if (!p.parse()) System.out.println("INVALID");
+        System.out.println(p.parse());
+        if (!p.parse()) System.out.println("ERROR");
+        System.out.println("VALID");
+        return;
     }
 }
 

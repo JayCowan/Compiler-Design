@@ -51,6 +51,7 @@ public static void main(String[] args) throws FileNotFoundException, IOException
     while ((token = yylex.yylex()) != null) {
         System.out.println(token.text);
     }
+    System.out.println("End Lexer");
 }
 
 %}
