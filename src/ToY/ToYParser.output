@@ -1,5 +1,8 @@
 Nonterminals useless in grammar
 
+    input
+    line
+    printf
     dec
 
 
@@ -7,726 +10,635 @@ Terminals unused in grammar
 
     BOOL
     ID
+    '\n'
+    "printf"
+    ';'
     "bool"
 
 
 Rules useless in grammar
 
-   22 dec: ID
-   23    | "bool" dec '=' exp ';'
+   17 input: line
+   18      | input line
+
+   19 line: '\n'
+   20     | printf '\n'
+   21     | exp '\n'
+   22     | error '\n'
+
+   23 printf: STRING
+   24       | "printf" printf ';'
+
+   25 dec: ε
+   26    | "bool" dec '=' exp ';'
 
 
 Grammar
 
-    0 $accept: input $end
+    0 $accept: program $end
 
-    1 input: line
-    2      | input line
+    1 program: ε
+    2        | struct program
 
-    3 line: '\n'
-    4     | printf '\n'
-    5     | exp '\n'
-    6     | error '\n'
+    3 exp: NUM
+    4    | '!'
+    5    | '-' error
+    6    | '-' exp
+    7    | exp '+' exp
+    8    | exp '-' exp
+    9    | exp '^' exp
+   10    | exp '*' exp
+   11    | exp '/' exp
+   12    | exp '=' exp
+   13    | '(' exp ')'
 
-    7 exp: NUM
-    8    | '!'
-    9    | '-' error
-   10    | '-' exp
-   11    | exp '+' exp
-   12    | exp '-' exp
-   13    | exp '^' exp
-   14    | exp '*' exp
-   15    | exp '/' exp
-   16    | exp '=' exp
-   17    | '(' exp ')'
+   14 $@1: ε
 
-   18 $@1: ε
+   15 exp: '(' error ')' $@1 STRING
 
-   19 exp: '(' error ')' $@1 STRING
-
-   20 printf: STRING
-   21       | "printf" printf ';'
+   16 struct: "struct" exp
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
-    '\n' (10) 3 4 5 6
-    '!' (33) 8
-    '(' (40) 17 19
-    ')' (41) 17 19
-    '*' (42) 14
-    '+' (43) 11
-    '-' (45) 9 10 12
-    '/' (47) 15
-    ';' (59) 21
-    '=' (61) 16
-    '^' (94) 13
-    error (256) 6 9 19
-    NUM (258) 7
-    STRING (259) 19 20
+    '\n' (10)
+    '!' (33) 4
+    '(' (40) 13 15
+    ')' (41) 13 15
+    '*' (42) 10
+    '+' (43) 7
+    '-' (45) 5 6 8
+    '/' (47) 11
+    ';' (59)
+    '=' (61) 12
+    '^' (94) 9
+    error (256) 5 15
+    NUM (258) 3
+    STRING (259) 15
     BOOL (260)
     ID (261)
     NEG (262)
-    "printf" (263) 21
+    "printf" (263)
     "bool" (264)
+    "struct" (265) 16
 
 
 Nonterminals, with rules where they appear
 
-    $accept (21)
+    $accept (22)
         on left: 0
-    input (22)
+    program (23)
         on left: 1 2
         on right: 0 2
-    line (23)
-        on left: 3 4 5 6
-        on right: 1 2
     exp (24)
-        on left: 7 8 9 10 11 12 13 14 15 16 17 19
-        on right: 5 10 11 12 13 14 15 16 17
+        on left: 3 4 5 6 7 8 9 10 11 12 13 15
+        on right: 6 7 8 9 10 11 12 13 16
     $@1 (25)
-        on left: 18
-        on right: 19
-    printf (26)
-        on left: 20 21
-        on right: 4 21
+        on left: 14
+        on right: 15
+    struct (26)
+        on left: 16
+        on right: 2
 
 
 State 0
 
-    0 $accept: • input $end
-    1 input: • line
-    2      | • input line
-    3 line: • '\n'
-    4     | • printf '\n'
-    5     | • exp '\n'
-    6     | • error '\n'
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-   10    | • '-' exp
-   11    | • exp '+' exp
-   12    | • exp '-' exp
-   13    | • exp '^' exp
-   14    | • exp '*' exp
-   15    | • exp '/' exp
-   16    | • exp '=' exp
-   17    | • '(' exp ')'
-   19    | • '(' error ')' $@1 STRING
-   20 printf: • STRING
-   21       | • "printf" printf ';'
+    0 $accept: • program $end
+    1 program: ε •  [$end]
+    2        | • struct program
+   16 struct: • "struct" exp
 
-    error     shift, and go to state 1
-    NUM       shift, and go to state 2
-    STRING    shift, and go to state 3
-    '-'       shift, and go to state 4
-    '\n'      shift, and go to state 5
-    '!'       shift, and go to state 6
-    '('       shift, and go to state 7
-    "printf"  shift, and go to state 8
+    "struct"  shift, and go to state 1
 
-    input   go to state 9
-    line    go to state 10
-    exp     go to state 11
-    printf  go to state 12
+    $default  reduce using rule 1 (program)
+
+    program  go to state 2
+    struct   go to state 3
 
 
 State 1
 
-    6 line: error • '\n'
+    3 exp: • NUM
+    4    | • '!'
+    5    | • '-' error
+    6    | • '-' exp
+    7    | • exp '+' exp
+    8    | • exp '-' exp
+    9    | • exp '^' exp
+   10    | • exp '*' exp
+   11    | • exp '/' exp
+   12    | • exp '=' exp
+   13    | • '(' exp ')'
+   15    | • '(' error ')' $@1 STRING
+   16 struct: "struct" • exp
 
-    '\n'  shift, and go to state 13
+    NUM  shift, and go to state 4
+    '-'  shift, and go to state 5
+    '!'  shift, and go to state 6
+    '('  shift, and go to state 7
+
+    exp  go to state 8
 
 
 State 2
 
-    7 exp: NUM •
+    0 $accept: program • $end
 
-    $default  reduce using rule 7 (exp)
+    $end  shift, and go to state 9
 
 
 State 3
 
-   20 printf: STRING •
+    1 program: ε •  [$end]
+    2        | • struct program
+    2        | struct • program
+   16 struct: • "struct" exp
 
-    $default  reduce using rule 20 (printf)
+    "struct"  shift, and go to state 1
+
+    $default  reduce using rule 1 (program)
+
+    program  go to state 10
+    struct   go to state 3
 
 
 State 4
 
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-    9    | '-' • error
-   10    | • '-' exp
-   10    | '-' • exp
-   11    | • exp '+' exp
-   12    | • exp '-' exp
-   13    | • exp '^' exp
-   14    | • exp '*' exp
-   15    | • exp '/' exp
-   16    | • exp '=' exp
-   17    | • '(' exp ')'
-   19    | • '(' error ')' $@1 STRING
+    3 exp: NUM •
 
-    error  shift, and go to state 14
-    NUM    shift, and go to state 2
-    '-'    shift, and go to state 4
-    '!'    shift, and go to state 6
-    '('    shift, and go to state 7
-
-    exp  go to state 15
+    $default  reduce using rule 3 (exp)
 
 
 State 5
 
-    3 line: '\n' •
+    3 exp: • NUM
+    4    | • '!'
+    5    | • '-' error
+    5    | '-' • error
+    6    | • '-' exp
+    6    | '-' • exp
+    7    | • exp '+' exp
+    8    | • exp '-' exp
+    9    | • exp '^' exp
+   10    | • exp '*' exp
+   11    | • exp '/' exp
+   12    | • exp '=' exp
+   13    | • '(' exp ')'
+   15    | • '(' error ')' $@1 STRING
 
-    $default  reduce using rule 3 (line)
+    error  shift, and go to state 11
+    NUM    shift, and go to state 4
+    '-'    shift, and go to state 5
+    '!'    shift, and go to state 6
+    '('    shift, and go to state 7
+
+    exp  go to state 12
 
 
 State 6
 
-    8 exp: '!' •
+    4 exp: '!' •
 
-    $default  reduce using rule 8 (exp)
+    $default  reduce using rule 4 (exp)
 
 
 State 7
 
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-   10    | • '-' exp
-   11    | • exp '+' exp
-   12    | • exp '-' exp
-   13    | • exp '^' exp
-   14    | • exp '*' exp
-   15    | • exp '/' exp
-   16    | • exp '=' exp
-   17    | • '(' exp ')'
-   17    | '(' • exp ')'
-   19    | • '(' error ')' $@1 STRING
-   19    | '(' • error ')' $@1 STRING
+    3 exp: • NUM
+    4    | • '!'
+    5    | • '-' error
+    6    | • '-' exp
+    7    | • exp '+' exp
+    8    | • exp '-' exp
+    9    | • exp '^' exp
+   10    | • exp '*' exp
+   11    | • exp '/' exp
+   12    | • exp '=' exp
+   13    | • '(' exp ')'
+   13    | '(' • exp ')'
+   15    | • '(' error ')' $@1 STRING
+   15    | '(' • error ')' $@1 STRING
 
-    error  shift, and go to state 16
-    NUM    shift, and go to state 2
-    '-'    shift, and go to state 4
+    error  shift, and go to state 13
+    NUM    shift, and go to state 4
+    '-'    shift, and go to state 5
     '!'    shift, and go to state 6
     '('    shift, and go to state 7
 
-    exp  go to state 17
+    exp  go to state 14
 
 
 State 8
 
-   20 printf: • STRING
-   21       | • "printf" printf ';'
-   21       | "printf" • printf ';'
+    7 exp: exp • '+' exp
+    8    | exp • '-' exp
+    9    | exp • '^' exp
+   10    | exp • '*' exp
+   11    | exp • '/' exp
+   12    | exp • '=' exp
+   16 struct: "struct" exp •  [$end, "struct"]
 
-    STRING    shift, and go to state 3
-    "printf"  shift, and go to state 8
+    '-'  shift, and go to state 15
+    '+'  shift, and go to state 16
+    '*'  shift, and go to state 17
+    '/'  shift, and go to state 18
+    '^'  shift, and go to state 19
+    '='  shift, and go to state 20
 
-    printf  go to state 18
+    $default  reduce using rule 16 (struct)
 
 
 State 9
 
-    0 $accept: input • $end
-    2 input: input • line
-    3 line: • '\n'
-    4     | • printf '\n'
-    5     | • exp '\n'
-    6     | • error '\n'
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-   10    | • '-' exp
-   11    | • exp '+' exp
-   12    | • exp '-' exp
-   13    | • exp '^' exp
-   14    | • exp '*' exp
-   15    | • exp '/' exp
-   16    | • exp '=' exp
-   17    | • '(' exp ')'
-   19    | • '(' error ')' $@1 STRING
-   20 printf: • STRING
-   21       | • "printf" printf ';'
-
-    $end      shift, and go to state 19
-    error     shift, and go to state 1
-    NUM       shift, and go to state 2
-    STRING    shift, and go to state 3
-    '-'       shift, and go to state 4
-    '\n'      shift, and go to state 5
-    '!'       shift, and go to state 6
-    '('       shift, and go to state 7
-    "printf"  shift, and go to state 8
-
-    line    go to state 20
-    exp     go to state 11
-    printf  go to state 12
-
-
-State 10
-
-    1 input: line •
-
-    $default  reduce using rule 1 (input)
-
-
-State 11
-
-    5 line: exp • '\n'
-   11 exp: exp • '+' exp
-   12    | exp • '-' exp
-   13    | exp • '^' exp
-   14    | exp • '*' exp
-   15    | exp • '/' exp
-   16    | exp • '=' exp
-
-    '-'   shift, and go to state 21
-    '+'   shift, and go to state 22
-    '*'   shift, and go to state 23
-    '/'   shift, and go to state 24
-    '^'   shift, and go to state 25
-    '='   shift, and go to state 26
-    '\n'  shift, and go to state 27
-
-
-State 12
-
-    4 line: printf • '\n'
-
-    '\n'  shift, and go to state 28
-
-
-State 13
-
-    6 line: error '\n' •
-
-    $default  reduce using rule 6 (line)
-
-
-State 14
-
-    9 exp: '-' error •
-
-    $default  reduce using rule 9 (exp)
-
-
-State 15
-
-   10 exp: '-' exp •  ['\n', ')']
-   11    | exp • '+' exp
-   12    | exp • '-' exp
-   13    | exp • '^' exp
-   14    | exp • '*' exp
-   15    | exp • '/' exp
-   16    | exp • '=' exp
-
-    '-'  shift, and go to state 21
-    '+'  shift, and go to state 22
-    '*'  shift, and go to state 23
-    '/'  shift, and go to state 24
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
-
-    $default  reduce using rule 10 (exp)
-
-    Conflict between rule 10 and token '-' resolved as shift (NEG < '-').
-    Conflict between rule 10 and token '+' resolved as shift (NEG < '+').
-    Conflict between rule 10 and token '*' resolved as shift (NEG < '*').
-    Conflict between rule 10 and token '/' resolved as shift (NEG < '/').
-    Conflict between rule 10 and token '^' resolved as shift (NEG < '^').
-    Conflict between rule 10 and token '=' resolved as shift (NEG < '=').
-
-
-State 16
-
-   19 exp: '(' error • ')' $@1 STRING
-
-    ')'  shift, and go to state 29
-
-
-State 17
-
-   11 exp: exp • '+' exp
-   12    | exp • '-' exp
-   13    | exp • '^' exp
-   14    | exp • '*' exp
-   15    | exp • '/' exp
-   16    | exp • '=' exp
-   17    | '(' exp • ')'
-
-    '-'  shift, and go to state 21
-    '+'  shift, and go to state 22
-    '*'  shift, and go to state 23
-    '/'  shift, and go to state 24
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
-    ')'  shift, and go to state 30
-
-
-State 18
-
-   21 printf: "printf" printf • ';'
-
-    ';'  shift, and go to state 31
-
-
-State 19
-
-    0 $accept: input $end •
+    0 $accept: program $end •
 
     $default  accept
 
 
+State 10
+
+    2 program: struct program •
+
+    $default  reduce using rule 2 (program)
+
+
+State 11
+
+    5 exp: '-' error •
+
+    $default  reduce using rule 5 (exp)
+
+
+State 12
+
+    6 exp: '-' exp •  [$end, ')', "struct"]
+    7    | exp • '+' exp
+    8    | exp • '-' exp
+    9    | exp • '^' exp
+   10    | exp • '*' exp
+   11    | exp • '/' exp
+   12    | exp • '=' exp
+
+    '-'  shift, and go to state 15
+    '+'  shift, and go to state 16
+    '*'  shift, and go to state 17
+    '/'  shift, and go to state 18
+    '^'  shift, and go to state 19
+    '='  shift, and go to state 20
+
+    $default  reduce using rule 6 (exp)
+
+    Conflict between rule 6 and token '-' resolved as shift (NEG < '-').
+    Conflict between rule 6 and token '+' resolved as shift (NEG < '+').
+    Conflict between rule 6 and token '*' resolved as shift (NEG < '*').
+    Conflict between rule 6 and token '/' resolved as shift (NEG < '/').
+    Conflict between rule 6 and token '^' resolved as shift (NEG < '^').
+    Conflict between rule 6 and token '=' resolved as shift (NEG < '=').
+
+
+State 13
+
+   15 exp: '(' error • ')' $@1 STRING
+
+    ')'  shift, and go to state 21
+
+
+State 14
+
+    7 exp: exp • '+' exp
+    8    | exp • '-' exp
+    9    | exp • '^' exp
+   10    | exp • '*' exp
+   11    | exp • '/' exp
+   12    | exp • '=' exp
+   13    | '(' exp • ')'
+
+    '-'  shift, and go to state 15
+    '+'  shift, and go to state 16
+    '*'  shift, and go to state 17
+    '/'  shift, and go to state 18
+    '^'  shift, and go to state 19
+    '='  shift, and go to state 20
+    ')'  shift, and go to state 22
+
+
+State 15
+
+    3 exp: • NUM
+    4    | • '!'
+    5    | • '-' error
+    6    | • '-' exp
+    7    | • exp '+' exp
+    8    | • exp '-' exp
+    8    | exp '-' • exp
+    9    | • exp '^' exp
+   10    | • exp '*' exp
+   11    | • exp '/' exp
+   12    | • exp '=' exp
+   13    | • '(' exp ')'
+   15    | • '(' error ')' $@1 STRING
+
+    NUM  shift, and go to state 4
+    '-'  shift, and go to state 5
+    '!'  shift, and go to state 6
+    '('  shift, and go to state 7
+
+    exp  go to state 23
+
+
+State 16
+
+    3 exp: • NUM
+    4    | • '!'
+    5    | • '-' error
+    6    | • '-' exp
+    7    | • exp '+' exp
+    7    | exp '+' • exp
+    8    | • exp '-' exp
+    9    | • exp '^' exp
+   10    | • exp '*' exp
+   11    | • exp '/' exp
+   12    | • exp '=' exp
+   13    | • '(' exp ')'
+   15    | • '(' error ')' $@1 STRING
+
+    NUM  shift, and go to state 4
+    '-'  shift, and go to state 5
+    '!'  shift, and go to state 6
+    '('  shift, and go to state 7
+
+    exp  go to state 24
+
+
+State 17
+
+    3 exp: • NUM
+    4    | • '!'
+    5    | • '-' error
+    6    | • '-' exp
+    7    | • exp '+' exp
+    8    | • exp '-' exp
+    9    | • exp '^' exp
+   10    | • exp '*' exp
+   10    | exp '*' • exp
+   11    | • exp '/' exp
+   12    | • exp '=' exp
+   13    | • '(' exp ')'
+   15    | • '(' error ')' $@1 STRING
+
+    NUM  shift, and go to state 4
+    '-'  shift, and go to state 5
+    '!'  shift, and go to state 6
+    '('  shift, and go to state 7
+
+    exp  go to state 25
+
+
+State 18
+
+    3 exp: • NUM
+    4    | • '!'
+    5    | • '-' error
+    6    | • '-' exp
+    7    | • exp '+' exp
+    8    | • exp '-' exp
+    9    | • exp '^' exp
+   10    | • exp '*' exp
+   11    | • exp '/' exp
+   11    | exp '/' • exp
+   12    | • exp '=' exp
+   13    | • '(' exp ')'
+   15    | • '(' error ')' $@1 STRING
+
+    NUM  shift, and go to state 4
+    '-'  shift, and go to state 5
+    '!'  shift, and go to state 6
+    '('  shift, and go to state 7
+
+    exp  go to state 26
+
+
+State 19
+
+    3 exp: • NUM
+    4    | • '!'
+    5    | • '-' error
+    6    | • '-' exp
+    7    | • exp '+' exp
+    8    | • exp '-' exp
+    9    | • exp '^' exp
+    9    | exp '^' • exp
+   10    | • exp '*' exp
+   11    | • exp '/' exp
+   12    | • exp '=' exp
+   13    | • '(' exp ')'
+   15    | • '(' error ')' $@1 STRING
+
+    NUM  shift, and go to state 4
+    '-'  shift, and go to state 5
+    '!'  shift, and go to state 6
+    '('  shift, and go to state 7
+
+    exp  go to state 27
+
+
 State 20
 
-    2 input: input line •
+    3 exp: • NUM
+    4    | • '!'
+    5    | • '-' error
+    6    | • '-' exp
+    7    | • exp '+' exp
+    8    | • exp '-' exp
+    9    | • exp '^' exp
+   10    | • exp '*' exp
+   11    | • exp '/' exp
+   12    | • exp '=' exp
+   12    | exp '=' • exp
+   13    | • '(' exp ')'
+   15    | • '(' error ')' $@1 STRING
 
-    $default  reduce using rule 2 (input)
+    NUM  shift, and go to state 4
+    '-'  shift, and go to state 5
+    '!'  shift, and go to state 6
+    '('  shift, and go to state 7
+
+    exp  go to state 28
 
 
 State 21
 
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-   10    | • '-' exp
-   11    | • exp '+' exp
-   12    | • exp '-' exp
-   12    | exp '-' • exp
-   13    | • exp '^' exp
-   14    | • exp '*' exp
-   15    | • exp '/' exp
-   16    | • exp '=' exp
-   17    | • '(' exp ')'
-   19    | • '(' error ')' $@1 STRING
+   14 $@1: ε •
+   15 exp: '(' error ')' • $@1 STRING
 
-    NUM  shift, and go to state 2
-    '-'  shift, and go to state 4
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
+    $default  reduce using rule 14 ($@1)
 
-    exp  go to state 32
+    $@1  go to state 29
 
 
 State 22
 
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-   10    | • '-' exp
-   11    | • exp '+' exp
-   11    | exp '+' • exp
-   12    | • exp '-' exp
-   13    | • exp '^' exp
-   14    | • exp '*' exp
-   15    | • exp '/' exp
-   16    | • exp '=' exp
-   17    | • '(' exp ')'
-   19    | • '(' error ')' $@1 STRING
+   13 exp: '(' exp ')' •
 
-    NUM  shift, and go to state 2
-    '-'  shift, and go to state 4
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
-
-    exp  go to state 33
+    $default  reduce using rule 13 (exp)
 
 
 State 23
 
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-   10    | • '-' exp
-   11    | • exp '+' exp
-   12    | • exp '-' exp
-   13    | • exp '^' exp
-   14    | • exp '*' exp
-   14    | exp '*' • exp
-   15    | • exp '/' exp
-   16    | • exp '=' exp
-   17    | • '(' exp ')'
-   19    | • '(' error ')' $@1 STRING
+    7 exp: exp • '+' exp
+    8    | exp • '-' exp
+    8    | exp '-' exp •  [$end, '-', '+', ')', "struct"]
+    9    | exp • '^' exp
+   10    | exp • '*' exp
+   11    | exp • '/' exp
+   12    | exp • '=' exp
 
-    NUM  shift, and go to state 2
-    '-'  shift, and go to state 4
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
+    '*'  shift, and go to state 17
+    '/'  shift, and go to state 18
+    '^'  shift, and go to state 19
+    '='  shift, and go to state 20
 
-    exp  go to state 34
+    $default  reduce using rule 8 (exp)
+
+    Conflict between rule 8 and token '-' resolved as reduce (%left '-').
+    Conflict between rule 8 and token '+' resolved as reduce (%left '+').
+    Conflict between rule 8 and token '*' resolved as shift ('-' < '*').
+    Conflict between rule 8 and token '/' resolved as shift ('-' < '/').
+    Conflict between rule 8 and token '^' resolved as shift ('-' < '^').
+    Conflict between rule 8 and token '=' resolved as shift ('-' < '=').
 
 
 State 24
 
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-   10    | • '-' exp
-   11    | • exp '+' exp
-   12    | • exp '-' exp
-   13    | • exp '^' exp
-   14    | • exp '*' exp
-   15    | • exp '/' exp
-   15    | exp '/' • exp
-   16    | • exp '=' exp
-   17    | • '(' exp ')'
-   19    | • '(' error ')' $@1 STRING
+    7 exp: exp • '+' exp
+    7    | exp '+' exp •  [$end, '-', '+', ')', "struct"]
+    8    | exp • '-' exp
+    9    | exp • '^' exp
+   10    | exp • '*' exp
+   11    | exp • '/' exp
+   12    | exp • '=' exp
 
-    NUM  shift, and go to state 2
-    '-'  shift, and go to state 4
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
+    '*'  shift, and go to state 17
+    '/'  shift, and go to state 18
+    '^'  shift, and go to state 19
+    '='  shift, and go to state 20
 
-    exp  go to state 35
+    $default  reduce using rule 7 (exp)
+
+    Conflict between rule 7 and token '-' resolved as reduce (%left '-').
+    Conflict between rule 7 and token '+' resolved as reduce (%left '+').
+    Conflict between rule 7 and token '*' resolved as shift ('+' < '*').
+    Conflict between rule 7 and token '/' resolved as shift ('+' < '/').
+    Conflict between rule 7 and token '^' resolved as shift ('+' < '^').
+    Conflict between rule 7 and token '=' resolved as shift ('+' < '=').
 
 
 State 25
 
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-   10    | • '-' exp
-   11    | • exp '+' exp
-   12    | • exp '-' exp
-   13    | • exp '^' exp
-   13    | exp '^' • exp
-   14    | • exp '*' exp
-   15    | • exp '/' exp
-   16    | • exp '=' exp
-   17    | • '(' exp ')'
-   19    | • '(' error ')' $@1 STRING
+    7 exp: exp • '+' exp
+    8    | exp • '-' exp
+    9    | exp • '^' exp
+   10    | exp • '*' exp
+   10    | exp '*' exp •  [$end, '-', '+', '*', '/', ')', "struct"]
+   11    | exp • '/' exp
+   12    | exp • '=' exp
 
-    NUM  shift, and go to state 2
-    '-'  shift, and go to state 4
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
+    '^'  shift, and go to state 19
+    '='  shift, and go to state 20
 
-    exp  go to state 36
+    $default  reduce using rule 10 (exp)
+
+    Conflict between rule 10 and token '-' resolved as reduce ('-' < '*').
+    Conflict between rule 10 and token '+' resolved as reduce ('+' < '*').
+    Conflict between rule 10 and token '*' resolved as reduce (%left '*').
+    Conflict between rule 10 and token '/' resolved as reduce (%left '/').
+    Conflict between rule 10 and token '^' resolved as shift ('*' < '^').
+    Conflict between rule 10 and token '=' resolved as shift ('*' < '=').
 
 
 State 26
 
-    7 exp: • NUM
-    8    | • '!'
-    9    | • '-' error
-   10    | • '-' exp
-   11    | • exp '+' exp
-   12    | • exp '-' exp
-   13    | • exp '^' exp
-   14    | • exp '*' exp
-   15    | • exp '/' exp
-   16    | • exp '=' exp
-   16    | exp '=' • exp
-   17    | • '(' exp ')'
-   19    | • '(' error ')' $@1 STRING
+    7 exp: exp • '+' exp
+    8    | exp • '-' exp
+    9    | exp • '^' exp
+   10    | exp • '*' exp
+   11    | exp • '/' exp
+   11    | exp '/' exp •  [$end, '-', '+', '*', '/', ')', "struct"]
+   12    | exp • '=' exp
 
-    NUM  shift, and go to state 2
-    '-'  shift, and go to state 4
-    '!'  shift, and go to state 6
-    '('  shift, and go to state 7
+    '^'  shift, and go to state 19
+    '='  shift, and go to state 20
 
-    exp  go to state 37
+    $default  reduce using rule 11 (exp)
+
+    Conflict between rule 11 and token '-' resolved as reduce ('-' < '/').
+    Conflict between rule 11 and token '+' resolved as reduce ('+' < '/').
+    Conflict between rule 11 and token '*' resolved as reduce (%left '*').
+    Conflict between rule 11 and token '/' resolved as reduce (%left '/').
+    Conflict between rule 11 and token '^' resolved as shift ('/' < '^').
+    Conflict between rule 11 and token '=' resolved as shift ('/' < '=').
 
 
 State 27
 
-    5 line: exp '\n' •
+    7 exp: exp • '+' exp
+    8    | exp • '-' exp
+    9    | exp • '^' exp
+    9    | exp '^' exp •  [$end, '-', '+', '*', '/', ')', "struct"]
+   10    | exp • '*' exp
+   11    | exp • '/' exp
+   12    | exp • '=' exp
 
-    $default  reduce using rule 5 (line)
+    '^'  shift, and go to state 19
+    '='  shift, and go to state 20
+
+    $default  reduce using rule 9 (exp)
+
+    Conflict between rule 9 and token '-' resolved as reduce ('-' < '^').
+    Conflict between rule 9 and token '+' resolved as reduce ('+' < '^').
+    Conflict between rule 9 and token '*' resolved as reduce ('*' < '^').
+    Conflict between rule 9 and token '/' resolved as reduce ('/' < '^').
+    Conflict between rule 9 and token '^' resolved as shift (%right '^').
+    Conflict between rule 9 and token '=' resolved as shift ('^' < '=').
 
 
 State 28
 
-    4 line: printf '\n' •
+    7 exp: exp • '+' exp
+    8    | exp • '-' exp
+    9    | exp • '^' exp
+   10    | exp • '*' exp
+   11    | exp • '/' exp
+   12    | exp • '=' exp
+   12    | exp '=' exp •  [$end, ')', "struct"]
 
-    $default  reduce using rule 4 (line)
+    '-'  shift, and go to state 15
+    '+'  shift, and go to state 16
+    '*'  shift, and go to state 17
+    '/'  shift, and go to state 18
+    '^'  shift, and go to state 19
+    '='  shift, and go to state 20
+
+    $default  reduce using rule 12 (exp)
+
+    Conflict between rule 12 and token '-' resolved as shift (NEG < '-').
+    Conflict between rule 12 and token '+' resolved as shift (NEG < '+').
+    Conflict between rule 12 and token '*' resolved as shift (NEG < '*').
+    Conflict between rule 12 and token '/' resolved as shift (NEG < '/').
+    Conflict between rule 12 and token '^' resolved as shift (NEG < '^').
+    Conflict between rule 12 and token '=' resolved as shift (NEG < '=').
 
 
 State 29
 
-   18 $@1: ε •
-   19 exp: '(' error ')' • $@1 STRING
+   15 exp: '(' error ')' $@1 • STRING
 
-    $default  reduce using rule 18 ($@1)
-
-    $@1  go to state 38
+    STRING  shift, and go to state 30
 
 
 State 30
 
-   17 exp: '(' exp ')' •
-
-    $default  reduce using rule 17 (exp)
-
-
-State 31
-
-   21 printf: "printf" printf ';' •
-
-    $default  reduce using rule 21 (printf)
-
-
-State 32
-
-   11 exp: exp • '+' exp
-   12    | exp • '-' exp
-   12    | exp '-' exp •  ['-', '+', '\n', ')']
-   13    | exp • '^' exp
-   14    | exp • '*' exp
-   15    | exp • '/' exp
-   16    | exp • '=' exp
-
-    '*'  shift, and go to state 23
-    '/'  shift, and go to state 24
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
-
-    $default  reduce using rule 12 (exp)
-
-    Conflict between rule 12 and token '-' resolved as reduce (%left '-').
-    Conflict between rule 12 and token '+' resolved as reduce (%left '+').
-    Conflict between rule 12 and token '*' resolved as shift ('-' < '*').
-    Conflict between rule 12 and token '/' resolved as shift ('-' < '/').
-    Conflict between rule 12 and token '^' resolved as shift ('-' < '^').
-    Conflict between rule 12 and token '=' resolved as shift ('-' < '=').
-
-
-State 33
-
-   11 exp: exp • '+' exp
-   11    | exp '+' exp •  ['-', '+', '\n', ')']
-   12    | exp • '-' exp
-   13    | exp • '^' exp
-   14    | exp • '*' exp
-   15    | exp • '/' exp
-   16    | exp • '=' exp
-
-    '*'  shift, and go to state 23
-    '/'  shift, and go to state 24
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
-
-    $default  reduce using rule 11 (exp)
-
-    Conflict between rule 11 and token '-' resolved as reduce (%left '-').
-    Conflict between rule 11 and token '+' resolved as reduce (%left '+').
-    Conflict between rule 11 and token '*' resolved as shift ('+' < '*').
-    Conflict between rule 11 and token '/' resolved as shift ('+' < '/').
-    Conflict between rule 11 and token '^' resolved as shift ('+' < '^').
-    Conflict between rule 11 and token '=' resolved as shift ('+' < '=').
-
-
-State 34
-
-   11 exp: exp • '+' exp
-   12    | exp • '-' exp
-   13    | exp • '^' exp
-   14    | exp • '*' exp
-   14    | exp '*' exp •  ['-', '+', '*', '/', '\n', ')']
-   15    | exp • '/' exp
-   16    | exp • '=' exp
-
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
-
-    $default  reduce using rule 14 (exp)
-
-    Conflict between rule 14 and token '-' resolved as reduce ('-' < '*').
-    Conflict between rule 14 and token '+' resolved as reduce ('+' < '*').
-    Conflict between rule 14 and token '*' resolved as reduce (%left '*').
-    Conflict between rule 14 and token '/' resolved as reduce (%left '/').
-    Conflict between rule 14 and token '^' resolved as shift ('*' < '^').
-    Conflict between rule 14 and token '=' resolved as shift ('*' < '=').
-
-
-State 35
-
-   11 exp: exp • '+' exp
-   12    | exp • '-' exp
-   13    | exp • '^' exp
-   14    | exp • '*' exp
-   15    | exp • '/' exp
-   15    | exp '/' exp •  ['-', '+', '*', '/', '\n', ')']
-   16    | exp • '=' exp
-
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
+   15 exp: '(' error ')' $@1 STRING •
 
     $default  reduce using rule 15 (exp)
-
-    Conflict between rule 15 and token '-' resolved as reduce ('-' < '/').
-    Conflict between rule 15 and token '+' resolved as reduce ('+' < '/').
-    Conflict between rule 15 and token '*' resolved as reduce (%left '*').
-    Conflict between rule 15 and token '/' resolved as reduce (%left '/').
-    Conflict between rule 15 and token '^' resolved as shift ('/' < '^').
-    Conflict between rule 15 and token '=' resolved as shift ('/' < '=').
-
-
-State 36
-
-   11 exp: exp • '+' exp
-   12    | exp • '-' exp
-   13    | exp • '^' exp
-   13    | exp '^' exp •  ['-', '+', '*', '/', '\n', ')']
-   14    | exp • '*' exp
-   15    | exp • '/' exp
-   16    | exp • '=' exp
-
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
-
-    $default  reduce using rule 13 (exp)
-
-    Conflict between rule 13 and token '-' resolved as reduce ('-' < '^').
-    Conflict between rule 13 and token '+' resolved as reduce ('+' < '^').
-    Conflict between rule 13 and token '*' resolved as reduce ('*' < '^').
-    Conflict between rule 13 and token '/' resolved as reduce ('/' < '^').
-    Conflict between rule 13 and token '^' resolved as shift (%right '^').
-    Conflict between rule 13 and token '=' resolved as shift ('^' < '=').
-
-
-State 37
-
-   11 exp: exp • '+' exp
-   12    | exp • '-' exp
-   13    | exp • '^' exp
-   14    | exp • '*' exp
-   15    | exp • '/' exp
-   16    | exp • '=' exp
-   16    | exp '=' exp •  ['\n', ')']
-
-    '-'  shift, and go to state 21
-    '+'  shift, and go to state 22
-    '*'  shift, and go to state 23
-    '/'  shift, and go to state 24
-    '^'  shift, and go to state 25
-    '='  shift, and go to state 26
-
-    $default  reduce using rule 16 (exp)
-
-    Conflict between rule 16 and token '-' resolved as shift (NEG < '-').
-    Conflict between rule 16 and token '+' resolved as shift (NEG < '+').
-    Conflict between rule 16 and token '*' resolved as shift (NEG < '*').
-    Conflict between rule 16 and token '/' resolved as shift (NEG < '/').
-    Conflict between rule 16 and token '^' resolved as shift (NEG < '^').
-    Conflict between rule 16 and token '=' resolved as shift (NEG < '=').
-
-
-State 38
-
-   19 exp: '(' error ')' $@1 • STRING
-
-    STRING  shift, and go to state 39
-
-
-State 39
-
-   19 exp: '(' error ')' $@1 STRING •
-
-    $default  reduce using rule 19 (exp)

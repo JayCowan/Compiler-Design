@@ -49,8 +49,9 @@ import java.util.ArrayList;
     import java.io.Reader;
     import java.io.StreamTokenizer;
     import java.io.*;
+    import java.util.*;
 
-/* "ToYParser.java":54  */
+/* "ToYParser.java":55  */
 
 /**
  * A Bison parser, automatically generated from <tt>src/ToY/ToYParser.y</tt>.
@@ -110,12 +111,12 @@ public class  ToYParser
     S_18_printf_(18),              /* "printf"  */
     S_19_(19),                     /* ';'  */
     S_20_bool_(20),                /* "bool"  */
-    S_YYACCEPT(21),                /* $accept  */
-    S_input(22),                   /* input  */
-    S_line(23),                    /* line  */
+    S_21_struct_(21),              /* "struct"  */
+    S_YYACCEPT(22),                /* $accept  */
+    S_program(23),                 /* program  */
     S_exp(24),                     /* exp  */
     S_25_1(25),                    /* $@1  */
-    S_printf(26);                  /* printf  */
+    S_struct(26);                  /* struct  */
 
 
     private final int yycode_;
@@ -146,12 +147,12 @@ public class  ToYParser
       SymbolKind.S_18_printf_,
       SymbolKind.S_19_,
       SymbolKind.S_20_bool_,
+      SymbolKind.S_21_struct_,
       SymbolKind.S_YYACCEPT,
-      SymbolKind.S_input,
-      SymbolKind.S_line,
+      SymbolKind.S_program,
       SymbolKind.S_exp,
       SymbolKind.S_25_1,
-      SymbolKind.S_printf
+      SymbolKind.S_struct
     };
 
     static final SymbolKind get(int code) {
@@ -203,8 +204,8 @@ public class  ToYParser
     {
   "\"end of file\"", "error", "\"invalid token\"", "NUM", "STRING",
   "BOOL", "ID", "NEG", "'-'", "'+'", "'*'", "'/'", "'^'", "'='", "'\\n'",
-  "'!'", "'('", "')'", "\"printf\"", "';'", "\"bool\"", "$accept", "input",
-  "line", "exp", "$@1", "printf", null
+  "'!'", "'('", "')'", "\"printf\"", "';'", "\"bool\"", "\"struct\"",
+  "$accept", "program", "exp", "$@1", "struct", null
     };
   }
 
@@ -435,120 +436,99 @@ public class  ToYParser
 
     switch (yyn)
       {
-          case 5: /* line: printf '\n'  */
-  if (yyn == 5)
-    /* "src/ToY/ToYParser.y":41  */
-              {System.out.println(yystack.valueAt (1));};
-  break;
-
-
-  case 6: /* line: exp '\n'  */
-  if (yyn == 6)
-    /* "src/ToY/ToYParser.y":42  */
-            {System.out.println(yystack.valueAt (1));};
-  break;
-
-
-  case 8: /* exp: NUM  */
-  if (yyn == 8)
-    /* "src/ToY/ToYParser.y":46  */
+          case 4: /* exp: NUM  */
+  if (yyn == 4)
+    /* "src/ToY/ToYParser.y":50  */
                     { yyval = yystack.valueAt (0);};
   break;
 
 
-  case 9: /* exp: '!'  */
-  if (yyn == 9)
-    /* "src/ToY/ToYParser.y":47  */
+  case 5: /* exp: '!'  */
+  if (yyn == 5)
+    /* "src/ToY/ToYParser.y":51  */
                     { return YYERROR; };
   break;
 
 
-  case 10: /* exp: '-' error  */
-  if (yyn == 10)
-    /* "src/ToY/ToYParser.y":48  */
+  case 6: /* exp: '-' error  */
+  if (yyn == 6)
+    /* "src/ToY/ToYParser.y":52  */
                     { return YYERROR; };
   break;
 
 
-  case 11: /* exp: '-' exp  */
-  if (yyn == 11)
-    /* "src/ToY/ToYParser.y":49  */
+  case 7: /* exp: '-' exp  */
+  if (yyn == 7)
+    /* "src/ToY/ToYParser.y":53  */
                     { yyval = new Token((-(yystack.valueAt (0).parseInt())), TokenType.Type_Integer); };
   break;
 
 
-  case 12: /* exp: exp '+' exp  */
-  if (yyn == 12)
-    /* "src/ToY/ToYParser.y":50  */
+  case 8: /* exp: exp '+' exp  */
+  if (yyn == 8)
+    /* "src/ToY/ToYParser.y":54  */
                     { yyval = new Token(yystack.valueAt (2).parseInt() + yystack.valueAt (0).parseInt(), TokenType.Type_Integer); };
   break;
 
 
-  case 13: /* exp: exp '-' exp  */
-  if (yyn == 13)
-    /* "src/ToY/ToYParser.y":51  */
+  case 9: /* exp: exp '-' exp  */
+  if (yyn == 9)
+    /* "src/ToY/ToYParser.y":55  */
                     { yyval = new Token(yystack.valueAt (2).parseInt() - yystack.valueAt (0).parseInt(), TokenType.Type_Integer); };
   break;
 
 
-  case 14: /* exp: exp '^' exp  */
-  if (yyn == 14)
-    /* "src/ToY/ToYParser.y":52  */
+  case 10: /* exp: exp '^' exp  */
+  if (yyn == 10)
+    /* "src/ToY/ToYParser.y":56  */
                     { yyval = new Token((int) Math.pow(yystack.valueAt (2).parseInt(), yystack.valueAt (0).parseInt()), TokenType.Type_Integer); };
   break;
 
 
-  case 15: /* exp: exp '*' exp  */
-  if (yyn == 15)
-    /* "src/ToY/ToYParser.y":53  */
+  case 11: /* exp: exp '*' exp  */
+  if (yyn == 11)
+    /* "src/ToY/ToYParser.y":57  */
                     { yyval = new Token(yystack.valueAt (2).parseInt() * yystack.valueAt (0).parseInt(), TokenType.Type_Integer); };
   break;
 
 
-  case 16: /* exp: exp '/' exp  */
-  if (yyn == 16)
-    /* "src/ToY/ToYParser.y":54  */
+  case 12: /* exp: exp '/' exp  */
+  if (yyn == 12)
+    /* "src/ToY/ToYParser.y":58  */
                     { yyval = new Token((int) (yystack.valueAt (2).parseInt() / yystack.valueAt (0).parseInt()), TokenType.Type_Integer); };
   break;
 
 
-  case 17: /* exp: exp '=' exp  */
-  if (yyn == 17)
-    /* "src/ToY/ToYParser.y":55  */
+  case 13: /* exp: exp '=' exp  */
+  if (yyn == 13)
+    /* "src/ToY/ToYParser.y":59  */
                         { if (yystack.valueAt (2).parseInt() != yystack.valueAt (0).parseInt()) yyerror("calc: error: " + yystack.valueAt (2).toString() + " != " + yystack.valueAt (0).toString()); };
   break;
 
 
-  case 18: /* exp: '(' exp ')'  */
-  if (yyn == 18)
-    /* "src/ToY/ToYParser.y":56  */
+  case 14: /* exp: '(' exp ')'  */
+  if (yyn == 14)
+    /* "src/ToY/ToYParser.y":60  */
                     { yyval = new Token(yystack.valueAt (1).parseInt(), TokenType.Type_Integer);; };
   break;
 
 
-  case 19: /* $@1: %empty  */
-  if (yyn == 19)
-    /* "src/ToY/ToYParser.y":57  */
+  case 15: /* $@1: %empty  */
+  if (yyn == 15)
+    /* "src/ToY/ToYParser.y":61  */
                     { return YYERROR; };
   break;
 
 
-  case 20: /* exp: '(' error ')' $@1 STRING  */
-  if (yyn == 20)
-    /* "src/ToY/ToYParser.y":58  */
+  case 16: /* exp: '(' error ')' $@1 STRING  */
+  if (yyn == 16)
+    /* "src/ToY/ToYParser.y":62  */
                     { yyval = yystack.valueAt (4); };
   break;
 
 
-  case 22: /* printf: "printf" printf ';'  */
-  if (yyn == 22)
-    /* "src/ToY/ToYParser.y":62  */
-                        { yyval = new Token(yystack.valueAt (2).val().toString(), TokenType.Type_String); };
-  break;
 
-
-
-/* "ToYParser.java":552  */
+/* "ToYParser.java":532  */
 
         default: break;
       }
@@ -960,7 +940,7 @@ public class  ToYParser
     return yyvalue == yytable_ninf_;
   }
 
-  private static final byte yypact_ninf_ = -13;
+  private static final byte yypact_ninf_ = -21;
   private static final byte yytable_ninf_ = -1;
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
@@ -970,10 +950,10 @@ public class  ToYParser
   {
     return new byte[]
     {
-      32,   -12,   -13,   -13,    41,   -13,   -13,    50,    -3,    23,
-     -13,    61,     0,   -13,   -13,    68,   -11,    -1,    -6,   -13,
-     -13,    52,    52,    52,    52,    52,    52,   -13,   -13,   -13,
-     -13,   -13,    51,    51,    -8,    -8,    -8,    68,    21,   -13
+     -20,    21,     3,   -20,   -21,    15,   -21,    18,    -4,   -21,
+     -21,   -21,    -4,     0,    30,    21,    21,    21,    21,    21,
+      21,   -21,   -21,    38,    38,    32,    32,    32,    -4,    16,
+     -21
     };
   }
 
@@ -985,10 +965,10 @@ public class  ToYParser
   {
     return new byte[]
     {
-       0,     0,     8,    21,     0,     4,     9,     0,     0,     0,
-       2,     0,     0,     7,    10,    11,     0,     0,     0,     1,
-       3,     0,     0,     0,     0,     0,     0,     6,     5,    19,
-      18,    22,    13,    12,    15,    16,    14,    17,     0,    20
+       2,     0,     0,     2,     4,     0,     5,     0,    17,     1,
+       3,     6,     7,     0,     0,     0,     0,     0,     0,     0,
+       0,    15,    14,     9,     8,    11,    12,    10,    13,     0,
+      16
     };
   }
 
@@ -998,7 +978,7 @@ public class  ToYParser
   {
     return new byte[]
     {
-     -13,   -13,    19,    -4,   -13,    22
+     -21,    19,    -5,   -21,   -21
     };
   }
 
@@ -1008,7 +988,7 @@ public class  ToYParser
   {
     return new byte[]
     {
-       0,     9,    10,    11,    38,    12
+       0,     2,     8,    29,     3
     };
   }
 
@@ -1020,15 +1000,12 @@ public class  ToYParser
   {
     return new byte[]
     {
-      15,     3,    13,    17,    25,    26,    29,    21,    22,    23,
-      24,    25,    26,    31,    28,     8,    30,    32,    33,    34,
-      35,    36,    37,    19,     1,    39,     2,     3,    20,     0,
-      18,     4,     0,     1,     0,     2,     3,     5,     6,     7,
-       4,     8,    14,     0,     2,     0,     5,     6,     7,     4,
-       8,    16,     0,     2,     0,     2,     6,     7,     4,     0,
-       4,    23,    24,    25,    26,     6,     7,     6,     7,    21,
-      22,    23,    24,    25,    26,    27,    21,    22,    23,    24,
-      25,    26
+      12,     1,    14,     9,    15,    16,    17,    18,    19,    20,
+      23,    24,    25,    26,    27,    28,    11,    21,     4,    13,
+      30,     4,    10,     5,     4,     0,     5,     0,     0,     5,
+       6,     7,     0,     6,     7,     0,     6,     7,    15,    16,
+      17,    18,    19,    20,    19,    20,     0,    22,    17,    18,
+      19,    20
     };
   }
 
@@ -1037,14 +1014,11 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       4,     4,    14,     7,    12,    13,    17,     8,     9,    10,
-      11,    12,    13,    19,    14,    18,    17,    21,    22,    23,
-      24,    25,    26,     0,     1,     4,     3,     4,     9,    -1,
-       8,     8,    -1,     1,    -1,     3,     4,    14,    15,    16,
-       8,    18,     1,    -1,     3,    -1,    14,    15,    16,     8,
-      18,     1,    -1,     3,    -1,     3,    15,    16,     8,    -1,
-       8,    10,    11,    12,    13,    15,    16,    15,    16,     8,
-       9,    10,    11,    12,    13,    14,     8,     9,    10,    11,
+       5,    21,     7,     0,     8,     9,    10,    11,    12,    13,
+      15,    16,    17,    18,    19,    20,     1,    17,     3,     1,
+       4,     3,     3,     8,     3,    -1,     8,    -1,    -1,     8,
+      15,    16,    -1,    15,    16,    -1,    15,    16,     8,     9,
+      10,    11,    12,    13,    12,    13,    -1,    17,    10,    11,
       12,    13
     };
   }
@@ -1056,10 +1030,10 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,     1,     3,     4,     8,    14,    15,    16,    18,    22,
-      23,    24,    26,    14,     1,    24,     1,    24,    26,     0,
-      23,     8,     9,    10,    11,    12,    13,    14,    14,    17,
-      17,    19,    24,    24,    24,    24,    24,    24,    25,     4
+       0,    21,    23,    26,     3,     8,    15,    16,    24,     0,
+      23,     1,    24,     1,    24,     8,     9,    10,    11,    12,
+      13,    17,    17,    24,    24,    24,    24,    24,    24,    25,
+       4
     };
   }
 
@@ -1069,9 +1043,8 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,    21,    22,    22,    23,    23,    23,    23,    24,    24,
-      24,    24,    24,    24,    24,    24,    24,    24,    24,    25,
-      24,    26,    26
+       0,    22,    23,    23,    24,    24,    24,    24,    24,    24,
+      24,    24,    24,    24,    24,    25,    24,    26
     };
   }
 
@@ -1081,9 +1054,8 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,     2,     1,     2,     1,     2,     2,     2,     1,     1,
-       2,     2,     3,     3,     3,     3,     3,     3,     3,     0,
-       5,     1,     3
+       0,     2,     0,     2,     1,     1,     2,     2,     3,     3,
+       3,     3,     3,     3,     3,     0,     5,     2
     };
   }
 
@@ -1095,7 +1067,7 @@ private static final byte[] yycheck_ = yycheck_init();
   private static final SymbolKind yytranslate_(int t)
   {
     // Last valid token kind.
-    int code_max = 264;
+    int code_max = 265;
     if (t <= 0)
       return SymbolKind.S_YYEOF;
     else if (t <= code_max)
@@ -1134,18 +1106,18 @@ private static final byte[] yycheck_ = yycheck_init();
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,    18,    20
+       5,     6,     7,    18,    20,    21
     };
   }
 
 
-  private static final int YYLAST_ = 81;
+  private static final int YYLAST_ = 51;
   private static final int YYEMPTY_ = -2;
-  private static final int YYFINAL_ = 19;
-  private static final int YYNTOKENS_ = 21;
+  private static final int YYFINAL_ = 9;
+  private static final int YYNTOKENS_ = 22;
 
 /* Unqualified %code blocks.  */
-/* "src/ToY/ToYParser.y":18  */
+/* "src/ToY/ToYParser.y":19  */
 
     public static void main(String[] args) throws IOException {
         ToYLexer l = new ToYLexer(System.in);
@@ -1154,19 +1126,74 @@ private static final byte[] yycheck_ = yycheck_init();
         System.out.println("VALID");
     }
 
-/* "ToYParser.java":1158  */
+/* "ToYParser.java":1130  */
 
 }
-/* "src/ToY/ToYParser.y":68  */
+/* "src/ToY/ToYParser.y":73  */
 
+class Struct {
+    String name;
+    List<Map<String,String>> fields;
+    public Struct (String name, List<Map<String, String>> fields) {
+        this.name = name;
+        this.fields = fields;
+    }
+}
+class Function {
+    String name;
+    String returnType;
+    List<Map<String, String>> parameters;
+    List<Map<String, String>> variables;
+    public Function (String name, String returnType, List<Map<String, String>> parameters, List<Map<String, String>> variables) {
+        this.name = name;
+        this.returnType = returnType;
+        this.parameters = parameters;
+        this.variables = variables;
+    }
+
+}
+class SymbolTable {
+    public HashMap<String, Function> functionSymbolTable;
+    public HashMap<String, Struct> structSymbolTable;
+    public HashMap<String, String> variableSymbolTable;
+
+   public SymbolTable () {
+        functionSymbolTable = new HashMap<String, Function>();
+        structSymbolTable = new HashMap<String, Struct>();
+        variableSymbolTable = new HashMap<String, String>();
+    }
+
+    public void addFunction(Function function) {
+        functionSymbolTable.put(function.name, function);
+    }
+
+    public void addStruct(Struct struct) {
+        structSymbolTable.put(struct.name, struct);
+    }
+    public void addVariable(String name, String type) {
+        variableSymbolTable.put(name, type);
+    }
+    public String getVariable(String name) {
+        return variableSymbolTable.get(name);
+    }
+    public Function getFunction(String name) {
+        return functionSymbolTable.get(name);
+    }
+
+    public Struct getStruct(String name) {
+        return structSymbolTable.get(name);
+    }
+}
 class ToYLexer implements ToYParser.Lexer {
     InputStreamReader it;
     Yylex yylex;
+    SymbolTable symbols;
 
     public ToYLexer(InputStream is) {
         
         it = new InputStreamReader(is);
         yylex = new Yylex(it);
+        symbols = new SymbolTable();
     }
 
     @Override
