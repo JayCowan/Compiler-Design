@@ -1,9 +1,10 @@
 %language "Java"
-
+%define api.package { ToY }
 %define api.parser.class { ToYParser }
-%define api.value.type { Object }
+//%define api.value.type { Token }
 %define api.parser.public
 %define parse.error verbose
+
 
 %code imports {
     import java.io.IOException;
@@ -16,6 +17,7 @@
 
 %code {
     public static void main(String[] args) throws IOException {
+        System.out.println("Start");
         ToYLexer l = new ToYLexer(System.in);
         System.out.println("Lexer Created");
         ToYParser p = new ToYParser(l);
@@ -26,23 +28,27 @@
     }
 }
 
-%token <Integer> NUM
-%type <Integer> exp
+%token <Integer> NUM 
+%token <String> STRING
+%type <Integer> exp 
+%type <String> printf
 %precedence NEG 
 %left '-' '+'
 %left '*' '/'
 %right '^'        /* exponentiation */
 %left '='
 
+
 %%
 input: line | input line;
 
 line: '\n'
+| printf '\n' 
 | exp '\n'  {System.out.println($exp);}
 | error '\n'
 ;
 exp:
-NUM
+NUM                 { $$ = $1;}
 | '!'               { $$ = 0; return YYERROR; }
 | '-' error         { $$ = 0; return YYERROR; }
 | '-' exp %prec NEG { $$ = -$2; }
@@ -55,7 +61,10 @@ NUM
 | '(' exp ')'       { $$ = $2; }
 | '(' error ')'     { $$ = 1111; return YYERROR; }
 ;
-
+printf:
+STRING                  { $$ = $1; }
+| "printf" printf ';'   { System.out.println($2);}     
+;
 %%
 class ToYLexer implements ToYParser.Lexer {
     InputStreamReader it;
