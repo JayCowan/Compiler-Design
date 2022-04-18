@@ -94,24 +94,28 @@ public class  ToYParser
     S_YYUNDEF(2),                  /* "invalid token"  */
     S_NUM(3),                      /* NUM  */
     S_STRING(4),                   /* STRING  */
-    S_NEG(5),                      /* NEG  */
-    S_6_(6),                       /* '-'  */
-    S_7_(7),                       /* '+'  */
-    S_8_(8),                       /* '*'  */
-    S_9_(9),                       /* '/'  */
-    S_10_(10),                     /* '^'  */
-    S_11_(11),                     /* '='  */
-    S_12_n_(12),                   /* '\n'  */
-    S_13_(13),                     /* '!'  */
-    S_14_(14),                     /* '('  */
-    S_15_(15),                     /* ')'  */
-    S_16_printf_(16),              /* "printf"  */
-    S_17_(17),                     /* ';'  */
-    S_YYACCEPT(18),                /* $accept  */
-    S_input(19),                   /* input  */
-    S_line(20),                    /* line  */
-    S_exp(21),                     /* exp  */
-    S_printf(22);                  /* printf  */
+    S_BOOL(5),                     /* BOOL  */
+    S_ID(6),                       /* ID  */
+    S_NEG(7),                      /* NEG  */
+    S_8_(8),                       /* '-'  */
+    S_9_(9),                       /* '+'  */
+    S_10_(10),                     /* '*'  */
+    S_11_(11),                     /* '/'  */
+    S_12_(12),                     /* '^'  */
+    S_13_(13),                     /* '='  */
+    S_14_n_(14),                   /* '\n'  */
+    S_15_(15),                     /* '!'  */
+    S_16_(16),                     /* '('  */
+    S_17_(17),                     /* ')'  */
+    S_18_printf_(18),              /* "printf"  */
+    S_19_(19),                     /* ';'  */
+    S_20_bool_(20),                /* "bool"  */
+    S_YYACCEPT(21),                /* $accept  */
+    S_input(22),                   /* input  */
+    S_line(23),                    /* line  */
+    S_exp(24),                     /* exp  */
+    S_25_1(25),                    /* $@1  */
+    S_printf(26);                  /* printf  */
 
 
     private final int yycode_;
@@ -126,23 +130,27 @@ public class  ToYParser
       SymbolKind.S_YYUNDEF,
       SymbolKind.S_NUM,
       SymbolKind.S_STRING,
+      SymbolKind.S_BOOL,
+      SymbolKind.S_ID,
       SymbolKind.S_NEG,
-      SymbolKind.S_6_,
-      SymbolKind.S_7_,
       SymbolKind.S_8_,
       SymbolKind.S_9_,
       SymbolKind.S_10_,
       SymbolKind.S_11_,
-      SymbolKind.S_12_n_,
+      SymbolKind.S_12_,
       SymbolKind.S_13_,
-      SymbolKind.S_14_,
+      SymbolKind.S_14_n_,
       SymbolKind.S_15_,
-      SymbolKind.S_16_printf_,
+      SymbolKind.S_16_,
       SymbolKind.S_17_,
+      SymbolKind.S_18_printf_,
+      SymbolKind.S_19_,
+      SymbolKind.S_20_bool_,
       SymbolKind.S_YYACCEPT,
       SymbolKind.S_input,
       SymbolKind.S_line,
       SymbolKind.S_exp,
+      SymbolKind.S_25_1,
       SymbolKind.S_printf
     };
 
@@ -193,9 +201,10 @@ public class  ToYParser
   {
     return new String[]
     {
-  "\"end of file\"", "error", "\"invalid token\"", "NUM", "STRING", "NEG",
-  "'-'", "'+'", "'*'", "'/'", "'^'", "'='", "'\\n'", "'!'", "'('", "')'",
-  "\"printf\"", "';'", "$accept", "input", "line", "exp", "printf", null
+  "\"end of file\"", "error", "\"invalid token\"", "NUM", "STRING",
+  "BOOL", "ID", "NEG", "'-'", "'+'", "'*'", "'/'", "'^'", "'='", "'\\n'",
+  "'!'", "'('", "')'", "\"printf\"", "';'", "\"bool\"", "$accept", "input",
+  "line", "exp", "$@1", "printf", null
     };
   }
 
@@ -223,8 +232,12 @@ public class  ToYParser
     static final int NUM = 258;
     /** Token STRING, to be returned by the scanner.  */
     static final int STRING = 259;
+    /** Token BOOL, to be returned by the scanner.  */
+    static final int BOOL = 260;
+    /** Token ID, to be returned by the scanner.  */
+    static final int ID = 261;
     /** Token NEG, to be returned by the scanner.  */
-    static final int NEG = 260;
+    static final int NEG = 262;
 
     /** Deprecated, use YYEOF instead.  */
     public static final int EOF = YYEOF;
@@ -424,111 +437,118 @@ public class  ToYParser
       {
           case 5: /* line: printf '\n'  */
   if (yyn == 5)
-    /* "src/ToY/ToYParser.y":43  */
+    /* "src/ToY/ToYParser.y":41  */
               {System.out.println(yystack.valueAt (1));};
   break;
 
 
   case 6: /* line: exp '\n'  */
   if (yyn == 6)
-    /* "src/ToY/ToYParser.y":44  */
+    /* "src/ToY/ToYParser.y":42  */
             {System.out.println(yystack.valueAt (1));};
   break;
 
 
   case 8: /* exp: NUM  */
   if (yyn == 8)
-    /* "src/ToY/ToYParser.y":48  */
+    /* "src/ToY/ToYParser.y":46  */
                     { yyval = yystack.valueAt (0);};
   break;
 
 
   case 9: /* exp: '!'  */
   if (yyn == 9)
-    /* "src/ToY/ToYParser.y":49  */
+    /* "src/ToY/ToYParser.y":47  */
                     { return YYERROR; };
   break;
 
 
   case 10: /* exp: '-' error  */
   if (yyn == 10)
-    /* "src/ToY/ToYParser.y":50  */
+    /* "src/ToY/ToYParser.y":48  */
                     { return YYERROR; };
   break;
 
 
   case 11: /* exp: '-' exp  */
   if (yyn == 11)
-    /* "src/ToY/ToYParser.y":51  */
+    /* "src/ToY/ToYParser.y":49  */
                     { yyval = new Token((-(yystack.valueAt (0).parseInt())), TokenType.Type_Integer); };
   break;
 
 
   case 12: /* exp: exp '+' exp  */
   if (yyn == 12)
-    /* "src/ToY/ToYParser.y":52  */
+    /* "src/ToY/ToYParser.y":50  */
                     { yyval = new Token(yystack.valueAt (2).parseInt() + yystack.valueAt (0).parseInt(), TokenType.Type_Integer); };
   break;
 
 
   case 13: /* exp: exp '-' exp  */
   if (yyn == 13)
-    /* "src/ToY/ToYParser.y":53  */
+    /* "src/ToY/ToYParser.y":51  */
                     { yyval = new Token(yystack.valueAt (2).parseInt() - yystack.valueAt (0).parseInt(), TokenType.Type_Integer); };
   break;
 
 
   case 14: /* exp: exp '^' exp  */
   if (yyn == 14)
-    /* "src/ToY/ToYParser.y":54  */
+    /* "src/ToY/ToYParser.y":52  */
                     { yyval = new Token((int) Math.pow(yystack.valueAt (2).parseInt(), yystack.valueAt (0).parseInt()), TokenType.Type_Integer); };
   break;
 
 
   case 15: /* exp: exp '*' exp  */
   if (yyn == 15)
-    /* "src/ToY/ToYParser.y":55  */
+    /* "src/ToY/ToYParser.y":53  */
                     { yyval = new Token(yystack.valueAt (2).parseInt() * yystack.valueAt (0).parseInt(), TokenType.Type_Integer); };
   break;
 
 
   case 16: /* exp: exp '/' exp  */
   if (yyn == 16)
-    /* "src/ToY/ToYParser.y":56  */
+    /* "src/ToY/ToYParser.y":54  */
                     { yyval = new Token((int) (yystack.valueAt (2).parseInt() / yystack.valueAt (0).parseInt()), TokenType.Type_Integer); };
   break;
 
 
   case 17: /* exp: exp '=' exp  */
   if (yyn == 17)
-    /* "src/ToY/ToYParser.y":57  */
+    /* "src/ToY/ToYParser.y":55  */
                         { if (yystack.valueAt (2).parseInt() != yystack.valueAt (0).parseInt()) yyerror("calc: error: " + yystack.valueAt (2).toString() + " != " + yystack.valueAt (0).toString()); };
   break;
 
 
   case 18: /* exp: '(' exp ')'  */
   if (yyn == 18)
-    /* "src/ToY/ToYParser.y":58  */
+    /* "src/ToY/ToYParser.y":56  */
                     { yyval = new Token(yystack.valueAt (1).parseInt(), TokenType.Type_Integer);; };
   break;
 
 
-  case 19: /* exp: '(' error ')'  */
+  case 19: /* $@1: %empty  */
   if (yyn == 19)
-    /* "src/ToY/ToYParser.y":59  */
+    /* "src/ToY/ToYParser.y":57  */
                     { return YYERROR; };
   break;
 
 
-  case 21: /* printf: "printf" printf ';'  */
-  if (yyn == 21)
-    /* "src/ToY/ToYParser.y":63  */
+  case 20: /* exp: '(' error ')' $@1 STRING  */
+  if (yyn == 20)
+    /* "src/ToY/ToYParser.y":58  */
+                    { yyval = yystack.valueAt (4); };
+  break;
+
+
+  case 22: /* printf: "printf" printf ';'  */
+  if (yyn == 22)
+    /* "src/ToY/ToYParser.y":62  */
                         { yyval = new Token(yystack.valueAt (2).val().toString(), TokenType.Type_String); };
   break;
 
 
 
-/* "ToYParser.java":532  */
+/* "ToYParser.java":552  */
 
         default: break;
       }
@@ -940,7 +960,7 @@ public class  ToYParser
     return yyvalue == yytable_ninf_;
   }
 
-  private static final byte yypact_ninf_ = -6;
+  private static final byte yypact_ninf_ = -13;
   private static final byte yytable_ninf_ = -1;
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
@@ -950,10 +970,10 @@ public class  ToYParser
   {
     return new byte[]
     {
-      37,     4,    -6,    -6,     1,    -6,    -6,    41,    -3,    23,
-      -6,    64,    13,    -6,    -6,    71,    15,    54,    11,    -6,
-      -6,    53,    53,    53,    53,    53,    53,    -6,    -6,    -6,
-      -6,    -6,     0,     0,    -5,    -5,    -5,    71
+      32,   -12,   -13,   -13,    41,   -13,   -13,    50,    -3,    23,
+     -13,    61,     0,   -13,   -13,    68,   -11,    -1,    -6,   -13,
+     -13,    52,    52,    52,    52,    52,    52,   -13,   -13,   -13,
+     -13,   -13,    51,    51,    -8,    -8,    -8,    68,    21,   -13
     };
   }
 
@@ -965,10 +985,10 @@ public class  ToYParser
   {
     return new byte[]
     {
-       0,     0,     8,    20,     0,     4,     9,     0,     0,     0,
+       0,     0,     8,    21,     0,     4,     9,     0,     0,     0,
        2,     0,     0,     7,    10,    11,     0,     0,     0,     1,
        3,     0,     0,     0,     0,     0,     0,     6,     5,    19,
-      18,    21,    13,    12,    15,    16,    14,    17
+      18,    22,    13,    12,    15,    16,    14,    17,     0,    20
     };
   }
 
@@ -978,7 +998,7 @@ public class  ToYParser
   {
     return new byte[]
     {
-      -6,    -6,     3,    -4,    24
+     -13,   -13,    19,    -4,   -13,    22
     };
   }
 
@@ -988,7 +1008,7 @@ public class  ToYParser
   {
     return new byte[]
     {
-       0,     9,    10,    11,    12
+       0,     9,    10,    11,    38,    12
     };
   }
 
@@ -1000,15 +1020,15 @@ public class  ToYParser
   {
     return new byte[]
     {
-      15,     3,    14,    17,     2,    25,    26,     4,    23,    24,
-      25,    26,    20,     8,     6,     7,    13,    32,    33,    34,
-      35,    36,    37,    19,     1,    28,     2,     3,    31,     4,
-      29,     0,    18,     0,     0,     5,     6,     7,     1,     8,
-       2,     3,    16,     4,     2,     0,     0,     4,     0,     5,
-       6,     7,     0,     8,     6,     7,     2,     0,     0,     4,
-      21,    22,    23,    24,    25,    26,     6,     7,     0,    30,
-      21,    22,    23,    24,    25,    26,    27,    21,    22,    23,
-      24,    25,    26
+      15,     3,    13,    17,    25,    26,    29,    21,    22,    23,
+      24,    25,    26,    31,    28,     8,    30,    32,    33,    34,
+      35,    36,    37,    19,     1,    39,     2,     3,    20,     0,
+      18,     4,     0,     1,     0,     2,     3,     5,     6,     7,
+       4,     8,    14,     0,     2,     0,     5,     6,     7,     4,
+       8,    16,     0,     2,     0,     2,     6,     7,     4,     0,
+       4,    23,    24,    25,    26,     6,     7,     6,     7,    21,
+      22,    23,    24,    25,    26,    27,    21,    22,    23,    24,
+      25,    26
     };
   }
 
@@ -1017,15 +1037,15 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       4,     4,     1,     7,     3,    10,    11,     6,     8,     9,
-      10,    11,     9,    16,    13,    14,    12,    21,    22,    23,
-      24,    25,    26,     0,     1,    12,     3,     4,    17,     6,
-      15,    -1,     8,    -1,    -1,    12,    13,    14,     1,    16,
-       3,     4,     1,     6,     3,    -1,    -1,     6,    -1,    12,
-      13,    14,    -1,    16,    13,    14,     3,    -1,    -1,     6,
-       6,     7,     8,     9,    10,    11,    13,    14,    -1,    15,
-       6,     7,     8,     9,    10,    11,    12,     6,     7,     8,
-       9,    10,    11
+       4,     4,    14,     7,    12,    13,    17,     8,     9,    10,
+      11,    12,    13,    19,    14,    18,    17,    21,    22,    23,
+      24,    25,    26,     0,     1,     4,     3,     4,     9,    -1,
+       8,     8,    -1,     1,    -1,     3,     4,    14,    15,    16,
+       8,    18,     1,    -1,     3,    -1,    14,    15,    16,     8,
+      18,     1,    -1,     3,    -1,     3,    15,    16,     8,    -1,
+       8,    10,    11,    12,    13,    15,    16,    15,    16,     8,
+       9,    10,    11,    12,    13,    14,     8,     9,    10,    11,
+      12,    13
     };
   }
 
@@ -1036,10 +1056,10 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,     1,     3,     4,     6,    12,    13,    14,    16,    19,
-      20,    21,    22,    12,     1,    21,     1,    21,    22,     0,
-      20,     6,     7,     8,     9,    10,    11,    12,    12,    15,
-      15,    17,    21,    21,    21,    21,    21,    21
+       0,     1,     3,     4,     8,    14,    15,    16,    18,    22,
+      23,    24,    26,    14,     1,    24,     1,    24,    26,     0,
+      23,     8,     9,    10,    11,    12,    13,    14,    14,    17,
+      17,    19,    24,    24,    24,    24,    24,    24,    25,     4
     };
   }
 
@@ -1049,9 +1069,9 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,    18,    19,    19,    20,    20,    20,    20,    21,    21,
-      21,    21,    21,    21,    21,    21,    21,    21,    21,    21,
-      22,    22
+       0,    21,    22,    22,    23,    23,    23,    23,    24,    24,
+      24,    24,    24,    24,    24,    24,    24,    24,    24,    25,
+      24,    26,    26
     };
   }
 
@@ -1062,8 +1082,8 @@ private static final byte[] yycheck_ = yycheck_init();
     return new byte[]
     {
        0,     2,     1,     2,     1,     2,     2,     2,     1,     1,
-       2,     2,     3,     3,     3,     3,     3,     3,     3,     3,
-       1,     3
+       2,     2,     3,     3,     3,     3,     3,     3,     3,     0,
+       5,     1,     3
     };
   }
 
@@ -1075,7 +1095,7 @@ private static final byte[] yycheck_ = yycheck_init();
   private static final SymbolKind yytranslate_(int t)
   {
     // Last valid token kind.
-    int code_max = 261;
+    int code_max = 264;
     if (t <= 0)
       return SymbolKind.S_YYEOF;
     else if (t <= code_max)
@@ -1089,15 +1109,15 @@ private static final byte[] yycheck_ = yycheck_init();
     return new byte[]
     {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      12,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      14,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    13,     2,     2,     2,     2,     2,     2,
-      14,    15,     8,     7,     2,     6,     2,     9,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    17,
-       2,    11,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,    15,     2,     2,     2,     2,     2,     2,
+      16,    17,    10,     9,     2,     8,     2,    11,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    19,
+       2,    13,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,    10,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,    12,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1114,32 +1134,30 @@ private static final byte[] yycheck_ = yycheck_init();
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,    16
+       5,     6,     7,    18,    20
     };
   }
 
 
-  private static final int YYLAST_ = 82;
+  private static final int YYLAST_ = 81;
   private static final int YYEMPTY_ = -2;
   private static final int YYFINAL_ = 19;
-  private static final int YYNTOKENS_ = 18;
+  private static final int YYNTOKENS_ = 21;
 
 /* Unqualified %code blocks.  */
 /* "src/ToY/ToYParser.y":18  */
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Start");
         ToYLexer l = new ToYLexer(System.in);
-        System.out.println("Lexer Created");
         ToYParser p = new ToYParser(l);
         if (!p.parse()) System.out.println("ERROR");
         System.out.println("VALID");
     }
 
-/* "ToYParser.java":1140  */
+/* "ToYParser.java":1158  */
 
 }
-/* "src/ToY/ToYParser.y":65  */
+/* "src/ToY/ToYParser.y":68  */
 
 class ToYLexer implements ToYParser.Lexer {
     InputStreamReader it;

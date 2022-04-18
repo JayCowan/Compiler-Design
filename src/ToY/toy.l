@@ -41,6 +41,7 @@ enum TokenType {
     Type_Operator,
     Type_Identifier,
     Type_String,
+    Type_Conditional,
     Type_Semicolon,
 }
 %%
@@ -58,14 +59,15 @@ NegDec = [-]({Int}|{Decimal})
 Integer = ({NegDec}|{Decimal}|{Int})
 //Letter = [A-Z, a-z]
 Other = [0-9&.]
-Keyword = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct" | "if" | "then" | "else" | "for" | "return")
+Keyword = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct")
+Conditional = ("if" | "then" | "else" | "for" | "return")
 ReservedFunction = "printf"
 //Input = [^\r\n]
 Terminator = \r|\n|\r\n
 WhiteSpace = {Terminator} | [ \t\f] | [\040\ n] | (" ")
 Bracket = [{}()]
 Semicolon = (";")
-Operator = ("++" | "--" | "**" | "<=" | ">=" | "!=" | "%" | "=" | "<" | ">" | "!" | "." | "+" | "-" | "/" | "*" | "&&" | "||")
+Operator = ( "<=" | ">=" | "!=" | "%" | "=" | "<" | ">" | "!" | "." | "+" | "-" | "/" | "*")
 Identifier = [[:jletter:]&&[:jletterdigit:]]
 
 %state STRING
@@ -89,6 +91,8 @@ try {
             if (Long.parseLong(tokens.get(i).val().toString()) > Integer.MAX_VALUE) {
                 throw new Exception("Value above maxint");
             }
+            break;
+            case Type_Conditional:
             break;
             case Type_Other:
             break;

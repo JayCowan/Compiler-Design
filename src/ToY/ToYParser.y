@@ -17,17 +17,15 @@
 
 %code {
     public static void main(String[] args) throws IOException {
-        System.out.println("Start");
         ToYLexer l = new ToYLexer(System.in);
-        System.out.println("Lexer Created");
         ToYParser p = new ToYParser(l);
         if (!p.parse()) System.out.println("ERROR");
         System.out.println("VALID");
     }
 }
 
-%token NUM STRING
-%type exp printf
+%token NUM STRING BOOL ID
+%type exp printf dec type
 
 %precedence NEG 
 %left '-' '+'
@@ -57,11 +55,17 @@ NUM                 { $$ = $1;}
 | exp '=' exp %prec NEG { if ($1.parseInt() != $3.parseInt()) yyerror("calc: error: " + $1.toString() + " != " + $3.toString()); }
 | '(' exp ')'       { $$ = new Token($2.parseInt(), TokenType.Type_Integer);; }
 | '(' error ')'     { return YYERROR; }
+STRING              { $$ = $1; }
 ;
 printf:
 STRING
 | "printf" printf ';'   { $$ = new Token($1.val().toString(), TokenType.Type_String); }     
 ;
+dec:
+| "bool" dec '=' exp ';' 
+;
+type:
+"struct" type       {}
 %%
 class ToYLexer implements ToYParser.Lexer {
     InputStreamReader it;

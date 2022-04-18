@@ -1,3 +1,21 @@
+Nonterminals useless in grammar
+
+    dec
+
+
+Terminals unused in grammar
+
+    BOOL
+    ID
+    "bool"
+
+
+Rules useless in grammar
+
+   22 dec: ID
+   23    | "bool" dec '=' exp ';'
+
+
 Grammar
 
     0 $accept: input $end
@@ -21,10 +39,13 @@ Grammar
    15    | exp '/' exp
    16    | exp '=' exp
    17    | '(' exp ')'
-   18    | '(' error ')'
 
-   19 printf: STRING
-   20       | "printf" printf ';'
+   18 $@1: ε
+
+   19 exp: '(' error ')' $@1 STRING
+
+   20 printf: STRING
+   21       | "printf" printf ';'
 
 
 Terminals, with rules where they appear
@@ -32,38 +53,44 @@ Terminals, with rules where they appear
     $end (0) 0
     '\n' (10) 3 4 5 6
     '!' (33) 8
-    '(' (40) 17 18
-    ')' (41) 17 18
+    '(' (40) 17 19
+    ')' (41) 17 19
     '*' (42) 14
     '+' (43) 11
     '-' (45) 9 10 12
     '/' (47) 15
-    ';' (59) 20
+    ';' (59) 21
     '=' (61) 16
     '^' (94) 13
-    error (256) 6 9 18
+    error (256) 6 9 19
     NUM (258) 7
-    STRING (259) 19
-    NEG (260)
-    "printf" (261) 20
+    STRING (259) 19 20
+    BOOL (260)
+    ID (261)
+    NEG (262)
+    "printf" (263) 21
+    "bool" (264)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (18)
+    $accept (21)
         on left: 0
-    input (19)
+    input (22)
         on left: 1 2
         on right: 0 2
-    line (20)
+    line (23)
         on left: 3 4 5 6
         on right: 1 2
-    exp (21)
-        on left: 7 8 9 10 11 12 13 14 15 16 17 18
+    exp (24)
+        on left: 7 8 9 10 11 12 13 14 15 16 17 19
         on right: 5 10 11 12 13 14 15 16 17
-    printf (22)
-        on left: 19 20
-        on right: 4 20
+    $@1 (25)
+        on left: 18
+        on right: 19
+    printf (26)
+        on left: 20 21
+        on right: 4 21
 
 
 State 0
@@ -86,9 +113,9 @@ State 0
    15    | • exp '/' exp
    16    | • exp '=' exp
    17    | • '(' exp ')'
-   18    | • '(' error ')'
-   19 printf: • STRING
-   20       | • "printf" printf ';'
+   19    | • '(' error ')' $@1 STRING
+   20 printf: • STRING
+   21       | • "printf" printf ';'
 
     error     shift, and go to state 1
     NUM       shift, and go to state 2
@@ -121,9 +148,9 @@ State 2
 
 State 3
 
-   19 printf: STRING •
+   20 printf: STRING •
 
-    $default  reduce using rule 19 (printf)
+    $default  reduce using rule 20 (printf)
 
 
 State 4
@@ -141,7 +168,7 @@ State 4
    15    | • exp '/' exp
    16    | • exp '=' exp
    17    | • '(' exp ')'
-   18    | • '(' error ')'
+   19    | • '(' error ')' $@1 STRING
 
     error  shift, and go to state 14
     NUM    shift, and go to state 2
@@ -180,8 +207,8 @@ State 7
    16    | • exp '=' exp
    17    | • '(' exp ')'
    17    | '(' • exp ')'
-   18    | • '(' error ')'
-   18    | '(' • error ')'
+   19    | • '(' error ')' $@1 STRING
+   19    | '(' • error ')' $@1 STRING
 
     error  shift, and go to state 16
     NUM    shift, and go to state 2
@@ -194,9 +221,9 @@ State 7
 
 State 8
 
-   19 printf: • STRING
-   20       | • "printf" printf ';'
-   20       | "printf" • printf ';'
+   20 printf: • STRING
+   21       | • "printf" printf ';'
+   21       | "printf" • printf ';'
 
     STRING    shift, and go to state 3
     "printf"  shift, and go to state 8
@@ -223,9 +250,9 @@ State 9
    15    | • exp '/' exp
    16    | • exp '=' exp
    17    | • '(' exp ')'
-   18    | • '(' error ')'
-   19 printf: • STRING
-   20       | • "printf" printf ';'
+   19    | • '(' error ')' $@1 STRING
+   20 printf: • STRING
+   21       | • "printf" printf ';'
 
     $end      shift, and go to state 19
     error     shift, and go to state 1
@@ -318,7 +345,7 @@ State 15
 
 State 16
 
-   18 exp: '(' error • ')'
+   19 exp: '(' error • ')' $@1 STRING
 
     ')'  shift, and go to state 29
 
@@ -344,7 +371,7 @@ State 17
 
 State 18
 
-   20 printf: "printf" printf • ';'
+   21 printf: "printf" printf • ';'
 
     ';'  shift, and go to state 31
 
@@ -377,7 +404,7 @@ State 21
    15    | • exp '/' exp
    16    | • exp '=' exp
    17    | • '(' exp ')'
-   18    | • '(' error ')'
+   19    | • '(' error ')' $@1 STRING
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -401,7 +428,7 @@ State 22
    15    | • exp '/' exp
    16    | • exp '=' exp
    17    | • '(' exp ')'
-   18    | • '(' error ')'
+   19    | • '(' error ')' $@1 STRING
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -425,7 +452,7 @@ State 23
    15    | • exp '/' exp
    16    | • exp '=' exp
    17    | • '(' exp ')'
-   18    | • '(' error ')'
+   19    | • '(' error ')' $@1 STRING
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -449,7 +476,7 @@ State 24
    15    | exp '/' • exp
    16    | • exp '=' exp
    17    | • '(' exp ')'
-   18    | • '(' error ')'
+   19    | • '(' error ')' $@1 STRING
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -473,7 +500,7 @@ State 25
    15    | • exp '/' exp
    16    | • exp '=' exp
    17    | • '(' exp ')'
-   18    | • '(' error ')'
+   19    | • '(' error ')' $@1 STRING
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -497,7 +524,7 @@ State 26
    16    | • exp '=' exp
    16    | exp '=' • exp
    17    | • '(' exp ')'
-   18    | • '(' error ')'
+   19    | • '(' error ')' $@1 STRING
 
     NUM  shift, and go to state 2
     '-'  shift, and go to state 4
@@ -523,9 +550,12 @@ State 28
 
 State 29
 
-   18 exp: '(' error ')' •
+   18 $@1: ε •
+   19 exp: '(' error ')' • $@1 STRING
 
-    $default  reduce using rule 18 (exp)
+    $default  reduce using rule 18 ($@1)
+
+    $@1  go to state 38
 
 
 State 30
@@ -537,9 +567,9 @@ State 30
 
 State 31
 
-   20 printf: "printf" printf ';' •
+   21 printf: "printf" printf ';' •
 
-    $default  reduce using rule 20 (printf)
+    $default  reduce using rule 21 (printf)
 
 
 State 32
@@ -686,3 +716,17 @@ State 37
     Conflict between rule 16 and token '/' resolved as shift (NEG < '/').
     Conflict between rule 16 and token '^' resolved as shift (NEG < '^').
     Conflict between rule 16 and token '=' resolved as shift (NEG < '=').
+
+
+State 38
+
+   19 exp: '(' error ')' $@1 • STRING
+
+    STRING  shift, and go to state 39
+
+
+State 39
+
+   19 exp: '(' error ')' $@1 STRING •
+
+    $default  reduce using rule 19 (exp)
