@@ -1,7 +1,7 @@
 %language "Java"
 %define api.package { ToY }
 %define api.parser.class { ToYParser }
-//%define api.value.type { Token }
+%define api.value.type { Token }
 %define api.parser.public
 %define parse.error verbose
 
@@ -21,17 +21,14 @@
         ToYLexer l = new ToYLexer(System.in);
         System.out.println("Lexer Created");
         ToYParser p = new ToYParser(l);
-        System.out.println(p.parse());
         if (!p.parse()) System.out.println("ERROR");
         System.out.println("VALID");
-        return;
     }
 }
 
-%token <Integer> NUM 
-%token <String> STRING
-%type <Integer> exp 
-%type <String> printf
+%token NUM STRING
+%type exp printf str
+
 %precedence NEG 
 %left '-' '+'
 %left '*' '/'
@@ -49,20 +46,24 @@ line: '\n'
 ;
 exp:
 NUM                 { $$ = $1;}
-| '!'               { $$ = 0; return YYERROR; }
-| '-' error         { $$ = 0; return YYERROR; }
-| '-' exp %prec NEG { $$ = -$2; }
-| exp '+' exp       { $$ = $1 + $3; }
-| exp '-' exp       { $$ = $1 - $3; }
-| exp '^' exp       { $$ = (int) Math.pow($1, $3); }
-| exp '*' exp       { $$ = $1 * $3; }
-| exp '/' exp       { $$ = $1 / $3; }
-| exp '=' exp %prec NEG { if ($1.intValue() != $3.intValue()) yyerror("calc: error: " + $1 + " != " + $3); }
-| '(' exp ')'       { $$ = $2; }
-| '(' error ')'     { $$ = 1111; return YYERROR; }
+| exp exp           { if ($1.type == TokenType.Type_Integer && $2.type == TokenType.Type_Integer) $$ = new Token(($1.parseInt() * 10) + $2.parseInt()}
+| '!'               { return YYERROR; }
+| '-' error         { return YYERROR; }
+| '-' exp %prec NEG { $$ = new Token((-($2.parseInt())), TokenType.Type_Integer); }
+| exp '+' exp       { $$ = new Token($1.parseInt() + $3.parseInt(), TokenType.Type_Integer); }
+| exp '-' exp       { $$ = new Token($1.parseInt() - $3.parseInt(), TokenType.Type_Integer); }
+| exp '^' exp       { $$ = new Token((int) Math.pow($1.parseInt(), $3.parseInt()), TokenType.Type_Integer); }
+| exp '*' exp       { $$ = new Token($1.parseInt() * $3.parseInt(), TokenType.Type_Integer); }
+| exp '/' exp       { $$ = new Token((int) ($1.parseInt() / $3.parseInt()), TokenType.Type_Integer); }
+| exp '=' exp %prec NEG { if ($1.parseInt() != $3.parseInt()) yyerror("calc: error: " + $1.toString() + " != " + $3.toString()); }
+| '(' exp ')'       { $$ = new Token($2.parseInt(), TokenType.Type_Integer);; }
+| '(' error ')'     { return YYERROR; }
+;
+str: 
+STRING              { $$ = $1; }
 ;
 printf:
-STRING                  { $$ = $1; }
+STRING                  { $$ = new Token($1.val().toString(), TokenType.Type_String); }
 | "printf" printf ';'   { System.out.println($2);}     
 ;
 %%
@@ -71,6 +72,7 @@ class ToYLexer implements ToYParser.Lexer {
     Yylex yylex;
 
     public ToYLexer(InputStream is) {
+        
         it = new InputStreamReader(is);
         yylex = new Yylex(it);
     }
@@ -82,8 +84,8 @@ class ToYLexer implements ToYParser.Lexer {
 
     Token yylval;
     @Override 
-    public Object getLVal() {
-        return yylval.typeToInt();
+    public Token getLVal() {
+        return yylval;
     }
 
     @Override

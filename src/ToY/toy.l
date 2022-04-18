@@ -4,18 +4,22 @@ import java.io.*;
 import java.util.*;
 
 class Token {
-    String text;
+    Object val;
     TokenType type;
 
-    Token(String text, TokenType type){
-        this.text = text;
+    Token(Object val, TokenType type){
+        this.val = val;
         this.type = type;
     }
-    public String text() {
-        return this.text;
+
+    public Object val() {
+        return this.val;
+    }
+    public Integer parseInt() {
+        return Integer.parseInt(this.val.toString());
     }
     public String toString() {
-        return String.format("%s %s", type, text);
+        return String.format("%s %s", type, val.toString());
     }
     int typeToInt() {
             return this.type.ordinal();
@@ -51,7 +55,7 @@ public static void main(String[] args) throws FileNotFoundException, IOException
     FileReader yyinput = new FileReader(args[0]);
     Yylex yylex = new Yylex(yyinput);
     Token token;
-    while ((token = yylex.yylex()).text != null) {
+    while ((token = yylex.yylex()).val != null) {
         tokens.add(token);
         System.out.println(token.toString());
     }
@@ -61,14 +65,14 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 
 %}
 
-Integer = [0 - 9]
-Letter = [A - Z, a - z]
-Other = [0 - 9 & .]
+Integer = [0-9]
+Letter = [A-Z, a-z]
+Other = [0-9&.]
 Keyword = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct" | "if" | "then" | "else" | "for" | "return")
 ReservedFunction = ("printf")
 //Input = [^\r\n]
 Terminator = \r|\n|\r\n
-WhiteSpace = {Terminator} | [ \t\f] | [\040\ n]
+WhiteSpace = {Terminator} | [ \t\f] | [\040\ n] | (" ")
 Bracket = [{}()]
 Semicolon = (";")
 Operator = ("++" | "--" | "**" | "<=" | ">=" | "!=" | "%" | "=" | "<" | ">" | "!" | "." | "+" | "-" | "/" | "*" | "&&" | "||")
@@ -103,11 +107,11 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 {Identifier}+ {
     return new Token(yytext(), TokenType.Type_Identifier);
 }
-{Integer}+ {
-    return new Token(yytext(), TokenType.Type_Integer);
-}
 {WhiteSpace}+ {
     return new Token(yytext(), TokenType.Type_White_Space);
+}
+{Integer}+ {
+    return new Token(yytext(), TokenType.Type_Integer);
 }
 \" {
     string.setLength(0);
@@ -129,7 +133,6 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 
 <STRING> {
 \" {
-    yytext();
     yybegin(YYINITIAL);
     return new Token(string.toString(), TokenType.Type_String);
 }
