@@ -2,3 +2,4 @@
 /src/ToY/*.java~
 /src/ToY/*.output
 *.class
+*.idea
