@@ -2,6 +2,7 @@ package ToY;
 
 import java.io.*;
 import java.util.*;
+import java.lang.*;
 
 class Token {
     Object val;
@@ -19,7 +20,7 @@ class Token {
         return Integer.parseInt(this.val.toString());
     }
     public String toString() {
-        return String.format("%s %s", type, val.toString());
+        return String.format("%s %s", type, val);
     }
     public int typeToInt() {
             return this.type.ordinal();
@@ -80,7 +81,37 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 %eofval}
 %eof{
 try {
-    System.out.println(tokens);
+    for(int i=0; i<tokens.size();i++){
+        switch (tokens.get(i).type) {
+            case Type_Null:
+            break;
+            case Type_Integer:
+            if (Long.parseLong(tokens.get(i).val().toString()) > Integer.MAX_VALUE) {
+                throw new Exception("Value above maxint");
+            }
+            break;
+            case Type_Other:
+            break;
+            case Type_Keyword:
+            break;
+            case Type_Reserved_Function:
+            break;
+            case Type_Terminator:
+            break;
+            case Type_White_Space:
+            break;
+            case Type_Bracket:
+            break;
+            case Type_Operator:
+            break;
+            case Type_Identifier:
+            break;
+            case Type_String:
+            break;
+            case Type_Semicolon:
+            break;
+        }
+    }
 } catch (Exception e) {
     System.out.println("Error");
 }

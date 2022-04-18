@@ -6,6 +6,7 @@ package ToY;
 
 import java.io.*;
 import java.util.*;
+import java.lang.*;
 
 class Token {
     Object val;
@@ -23,7 +24,7 @@ class Token {
         return Integer.parseInt(this.val.toString());
     }
     public String toString() {
-        return String.format("%s %s", type, val.toString());
+        return String.format("%s %s", type, val);
     }
     public int typeToInt() {
             return this.type.ordinal();
@@ -823,7 +824,37 @@ List<Token> tokens = new ArrayList<Token>();
       zzEOFDone = true;
     
 try {
-    System.out.println(tokens);
+    for(int i=0; i<tokens.size();i++){
+        switch (tokens.get(i).type) {
+            case Type_Null:
+            break;
+            case Type_Integer:
+            if (Long.parseLong(tokens.get(i).val().toString()) > Integer.MAX_VALUE) {
+                throw new Exception("Value above maxint");
+            }
+            break;
+            case Type_Other:
+            break;
+            case Type_Keyword:
+            break;
+            case Type_Reserved_Function:
+            break;
+            case Type_Terminator:
+            break;
+            case Type_White_Space:
+            break;
+            case Type_Bracket:
+            break;
+            case Type_Operator:
+            break;
+            case Type_Identifier:
+            break;
+            case Type_String:
+            break;
+            case Type_Semicolon:
+            break;
+        }
+    }
 } catch (Exception e) {
     System.out.println("Error");
 }
@@ -982,7 +1013,7 @@ try {
             switch (zzLexicalState) {
             case STRING: {
               System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: <<EOF>>");
-              System.out.println("action [144] { throw new Error(\"unexpected end of file\"); }");
+              System.out.println("action [175] { throw new Error(\"unexpected end of file\"); }");
               throw new Error("unexpected end of file");
             }  // fall though
             case 62: break;
@@ -995,28 +1026,28 @@ try {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [157] { throw new Error(\"Illegal character <\"+yytext()+\">\"); }");
+            System.out.println("action [188] { throw new Error(\"Illegal character <\"+yytext()+\">\"); }");
             { throw new Error("Illegal character <"+yytext()+">");
             }
             // fall through
           case 19: break;
           case 2:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [106] { tokens.add(new Token(yytext(), TokenType.Type_White_Space)); }");
+            System.out.println("action [137] { tokens.add(new Token(yytext(), TokenType.Type_White_Space)); }");
             { tokens.add(new Token(yytext(), TokenType.Type_White_Space));
             }
             // fall through
           case 20: break;
           case 3:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [100] { tokens.add(new Token(yytext(), TokenType.Type_Operator)); }");
+            System.out.println("action [131] { tokens.add(new Token(yytext(), TokenType.Type_Operator)); }");
             { tokens.add(new Token(yytext(), TokenType.Type_Operator));
             }
             // fall through
           case 21: break;
           case 4:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [112] { string.setLength(0);"+ZZ_NL+"    yybegin(STRING); }");
+            System.out.println("action [143] { string.setLength(0);"+ZZ_NL+"    yybegin(STRING); }");
             { string.setLength(0);
     yybegin(STRING);
             }
@@ -1024,49 +1055,49 @@ try {
           case 22: break;
           case 5:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [103] { tokens.add(new Token(yytext(), TokenType.Type_Identifier)); }");
+            System.out.println("action [134] { tokens.add(new Token(yytext(), TokenType.Type_Identifier)); }");
             { tokens.add(new Token(yytext(), TokenType.Type_Identifier));
             }
             // fall through
           case 23: break;
           case 6:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [119] { tokens.add(new Token(yytext(), TokenType.Type_Other)); }");
+            System.out.println("action [150] { tokens.add(new Token(yytext(), TokenType.Type_Other)); }");
             { tokens.add(new Token(yytext(), TokenType.Type_Other));
             }
             // fall through
           case 24: break;
           case 7:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [97] { tokens.add(new Token(yytext(), TokenType.Type_Bracket)); }");
+            System.out.println("action [128] { tokens.add(new Token(yytext(), TokenType.Type_Bracket)); }");
             { tokens.add(new Token(yytext(), TokenType.Type_Bracket));
             }
             // fall through
           case 25: break;
           case 8:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [109] { tokens.add(new Token(yytext(), TokenType.Type_Integer)); }");
+            System.out.println("action [140] { tokens.add(new Token(yytext(), TokenType.Type_Integer)); }");
             { tokens.add(new Token(yytext(), TokenType.Type_Integer));
             }
             // fall through
           case 26: break;
           case 9:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [122] { tokens.add(new Token(yytext(), TokenType.Type_Semicolon)); }");
+            System.out.println("action [153] { tokens.add(new Token(yytext(), TokenType.Type_Semicolon)); }");
             { tokens.add(new Token(yytext(), TokenType.Type_Semicolon));
             }
             // fall through
           case 27: break;
           case 10:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [135] { string.append(yytext()); }");
+            System.out.println("action [166] { string.append(yytext()); }");
             { string.append(yytext());
             }
             // fall through
           case 28: break;
           case 11:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [131] { yybegin(YYINITIAL);"+ZZ_NL+"    tokens.add(new Token(string.toString(), TokenType.Type_String)); }");
+            System.out.println("action [162] { yybegin(YYINITIAL);"+ZZ_NL+"    tokens.add(new Token(string.toString(), TokenType.Type_String)); }");
             { yybegin(YYINITIAL);
     tokens.add(new Token(string.toString(), TokenType.Type_String));
             }
@@ -1074,49 +1105,49 @@ try {
           case 29: break;
           case 12:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [153] { string.append(\'\\\\\'); }");
+            System.out.println("action [184] { string.append(\'\\\\\'); }");
             { string.append('\\');
             }
             // fall through
           case 30: break;
           case 13:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [94] { tokens.add(new Token(yytext(), TokenType.Type_Keyword)); }");
+            System.out.println("action [125] { tokens.add(new Token(yytext(), TokenType.Type_Keyword)); }");
             { tokens.add(new Token(yytext(), TokenType.Type_Keyword));
             }
             // fall through
           case 31: break;
           case 14:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [150] { string.append(\'\\\"\'); }");
+            System.out.println("action [181] { string.append(\'\\\"\'); }");
             { string.append('\"');
             }
             // fall through
           case 32: break;
           case 15:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [141] { throw new Error(\"Bad string literal\" + string.toString()); }");
+            System.out.println("action [172] { throw new Error(\"Bad string literal\" + string.toString()); }");
             { throw new Error("Bad string literal" + string.toString());
             }
             // fall through
           case 33: break;
           case 16:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [147] { string.append(\'\\r\'); }");
+            System.out.println("action [178] { string.append(\'\\r\'); }");
             { string.append('\r');
             }
             // fall through
           case 34: break;
           case 17:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [138] { string.append(\'\\t\'); }");
+            System.out.println("action [169] { string.append(\'\\t\'); }");
             { string.append('\t');
             }
             // fall through
           case 35: break;
           case 18:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"char: "+yychar+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [91] { tokens.add(new Token(yytext(), TokenType.Type_Reserved_Function)); }");
+            System.out.println("action [122] { tokens.add(new Token(yytext(), TokenType.Type_Reserved_Function)); }");
             { tokens.add(new Token(yytext(), TokenType.Type_Reserved_Function));
             }
             // fall through
