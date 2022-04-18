@@ -82,7 +82,7 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 try {
     System.out.println(tokens);
 } catch (Exception e) {
-
+    System.out.println("Error");
 }
 %eof}
 
