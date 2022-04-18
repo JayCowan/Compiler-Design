@@ -1,6 +1,7 @@
 package ToY;
 
 import java.io.*;
+import java.util.*;
 
 class Token {
     String text;
@@ -23,19 +24,19 @@ class Token {
 
 enum TokenType {
     Type_Null,
+    //Type_Input,
     Type_Letter,
     Type_Integer,
     Type_Other,
     Type_Keyword,
     Type_Reserved_Function,
-    Type_Input,
     Type_Terminator,
     Type_White_Space,
     Type_Bracket,
-    Type_Symbol,
     Type_Operator,
     Type_Identifier,
-    Type_String
+    Type_String,
+    Type_Semicolon,
 }
 %%
 
@@ -44,15 +45,17 @@ enum TokenType {
 %{
 
 StringBuffer string = new StringBuffer();
-
 public static void main(String[] args) throws FileNotFoundException, IOException {
+    List<Token> tokens = new ArrayList<Token>();
     System.out.println("Start Lexer");
     FileReader yyinput = new FileReader(args[0]);
     Yylex yylex = new Yylex(yyinput);
     Token token;
     while ((token = yylex.yylex()).text != null) {
+        tokens.add(token);
         System.out.println(token.toString());
     }
+    System.out.println(tokens.toString());
     System.out.println("End Lexer");
 }
 
@@ -63,11 +66,11 @@ Letter = [A - Z, a - z]
 Other = [0 - 9 & .]
 Keyword = ("bool" | "int" | "true" | "false" | "void" | "string" | "struct" | "if" | "then" | "else" | "for" | "return")
 ReservedFunction = ("printf")
-Input = [^\r\n]
+//Input = [^\r\n]
 Terminator = \r|\n|\r\n
 WhiteSpace = {Terminator} | [ \t\f] | [\040\ n]
 Bracket = [{}()]
-Symbol = (";")
+Semicolon = (";")
 Operator = ("++" | "--" | "**" | "<=" | ">=" | "!=" | "%" | "=" | "<" | ">" | "!" | "." | "+" | "-" | "/" | "*" | "&&" | "||")
 Identifier = [[:jletter:]&&[:jletterdigit:]]
 
@@ -116,13 +119,17 @@ Identifier = [[:jletter:]&&[:jletterdigit:]]
 {Other}+ {
     return new Token(yytext(), TokenType.Type_Other);
 }
-{Input}+ {
-    return new Token(yytext(), TokenType.Type_Input);
+{Semicolon}+ {
+    return new Token(yytext(), TokenType.Type_Semicolon);
 }
+//{Input}+ {
+//   return new Token(yytext(), TokenType.Type_Input);
+//}
 }
 
 <STRING> {
 \" {
+    yytext();
     yybegin(YYINITIAL);
     return new Token(string.toString(), TokenType.Type_String);
 }

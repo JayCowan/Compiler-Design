@@ -424,105 +424,105 @@ public class  ToYParser
       {
           case 6: /* line: exp '\n'  */
   if (yyn == 6)
-    /* "src/ToY/ToYParser.y":45  */
+    /* "src/ToY/ToYParser.y":47  */
             {System.out.println(((Integer)(yystack.valueAt (1))));};
   break;
 
 
   case 8: /* exp: NUM  */
   if (yyn == 8)
-    /* "src/ToY/ToYParser.y":49  */
+    /* "src/ToY/ToYParser.y":51  */
                     { yyval = ((Integer)(yystack.valueAt (0)));};
   break;
 
 
   case 9: /* exp: '!'  */
   if (yyn == 9)
-    /* "src/ToY/ToYParser.y":50  */
+    /* "src/ToY/ToYParser.y":52  */
                     { yyval = 0; return YYERROR; };
   break;
 
 
   case 10: /* exp: '-' error  */
   if (yyn == 10)
-    /* "src/ToY/ToYParser.y":51  */
+    /* "src/ToY/ToYParser.y":53  */
                     { yyval = 0; return YYERROR; };
   break;
 
 
   case 11: /* exp: '-' exp  */
   if (yyn == 11)
-    /* "src/ToY/ToYParser.y":52  */
+    /* "src/ToY/ToYParser.y":54  */
                     { yyval = -((Integer)(yystack.valueAt (0))); };
   break;
 
 
   case 12: /* exp: exp '+' exp  */
   if (yyn == 12)
-    /* "src/ToY/ToYParser.y":53  */
+    /* "src/ToY/ToYParser.y":55  */
                     { yyval = ((Integer)(yystack.valueAt (2))) + ((Integer)(yystack.valueAt (0))); };
   break;
 
 
   case 13: /* exp: exp '-' exp  */
   if (yyn == 13)
-    /* "src/ToY/ToYParser.y":54  */
+    /* "src/ToY/ToYParser.y":56  */
                     { yyval = ((Integer)(yystack.valueAt (2))) - ((Integer)(yystack.valueAt (0))); };
   break;
 
 
   case 14: /* exp: exp '^' exp  */
   if (yyn == 14)
-    /* "src/ToY/ToYParser.y":55  */
+    /* "src/ToY/ToYParser.y":57  */
                     { yyval = (int) Math.pow(((Integer)(yystack.valueAt (2))), ((Integer)(yystack.valueAt (0)))); };
   break;
 
 
   case 15: /* exp: exp '*' exp  */
   if (yyn == 15)
-    /* "src/ToY/ToYParser.y":56  */
+    /* "src/ToY/ToYParser.y":58  */
                     { yyval = ((Integer)(yystack.valueAt (2))) * ((Integer)(yystack.valueAt (0))); };
   break;
 
 
   case 16: /* exp: exp '/' exp  */
   if (yyn == 16)
-    /* "src/ToY/ToYParser.y":57  */
+    /* "src/ToY/ToYParser.y":59  */
                     { yyval = ((Integer)(yystack.valueAt (2))) / ((Integer)(yystack.valueAt (0))); };
   break;
 
 
   case 17: /* exp: exp '=' exp  */
   if (yyn == 17)
-    /* "src/ToY/ToYParser.y":58  */
+    /* "src/ToY/ToYParser.y":60  */
                         { if (((Integer)(yystack.valueAt (2))).intValue() != ((Integer)(yystack.valueAt (0))).intValue()) yyerror("calc: error: " + ((Integer)(yystack.valueAt (2))) + " != " + ((Integer)(yystack.valueAt (0)))); };
   break;
 
 
   case 18: /* exp: '(' exp ')'  */
   if (yyn == 18)
-    /* "src/ToY/ToYParser.y":59  */
+    /* "src/ToY/ToYParser.y":61  */
                     { yyval = ((Integer)(yystack.valueAt (1))); };
   break;
 
 
   case 19: /* exp: '(' error ')'  */
   if (yyn == 19)
-    /* "src/ToY/ToYParser.y":60  */
+    /* "src/ToY/ToYParser.y":62  */
                     { yyval = 1111; return YYERROR; };
   break;
 
 
   case 20: /* printf: STRING  */
   if (yyn == 20)
-    /* "src/ToY/ToYParser.y":63  */
+    /* "src/ToY/ToYParser.y":65  */
                         { yyval = ((String)(yystack.valueAt (0))); };
   break;
 
 
   case 21: /* printf: "printf" printf ';'  */
   if (yyn == 21)
-    /* "src/ToY/ToYParser.y":64  */
+    /* "src/ToY/ToYParser.y":66  */
                         { System.out.println(((String)(yystack.valueAt (1))));};
   break;
 
@@ -1130,16 +1130,18 @@ private static final byte[] yycheck_ = yycheck_init();
     public static void main(String[] args) throws IOException {
         System.out.println("Start");
         ToYLexer l = new ToYLexer(System.in);
+        System.out.println("Lexer Created");
         ToYParser p = new ToYParser(l);
+        System.out.println(p.parse());
         if (!p.parse()) System.out.println("ERROR");
         System.out.println("VALID");
         return;
     }
 
-/* "ToYParser.java":1140  */
+/* "ToYParser.java":1142  */
 
 }
-/* "src/ToY/ToYParser.y":66  */
+/* "src/ToY/ToYParser.y":68  */
 
 class ToYLexer implements ToYParser.Lexer {
     InputStreamReader it;
